@@ -1,0 +1,54 @@
+<aura:component implements="force:lightningQuickAction,flexipage:availableForAllPageTypes,force:hasRecordId" 
+                access="global"
+                controller="LTNG02_TransfertDemandeController" >
+    
+    <aura:attribute name="isOpen" type="Boolean" default="false"/>
+    <aura:attribute name="record" type="Object"
+                    description="The record object to be displayed"/>
+    <aura:attribute name="simpleRecord" type="Object"
+                    description="A simplified view record object to be displayed"/>
+    <aura:attribute name="result" type="String" />
+    <force:recordData aura:id="record"
+                      layoutType="FULL"
+                      recordId="{!v.recordId}"
+                      targetRecord="{!v.record}"
+                      fields="Dossier1__r.BusinessUnit__c,Datedenvoiengestion__c,Status"
+                      targetFields="{!v.simpleRecord }"
+                      mode="VIEW"/>
+    
+    <ui:button label="Transfert Gestion" press="{! c.openModel }" />
+    <aura:if isTrue="{!v.isOpen}">
+       
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">               
+                <header class="slds-modal__header">
+                   <!-- <lightning:buttonIcon iconName="utility:close"
+                                              onclick="{! c.closeModel }"
+                                              alternativeText="close"
+                                              variant="bare-inverse"
+                                              class="slds-modal__close"/>-->
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{!$Label.c.CL05_TransfertGestionHeader}</h2>
+                </header>
+               
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <p>
+                       <center><aura:unescapedHtml value="{!$Label.c.CL06_TransfertGestionBody}"/></center>
+                    </p>
+                   <!-- <p><lightning:formattedText title="Account Id" value="{!v.simpleRecord.Dossier1__r.BusinessUnit__c}" /></p>-->
+                </div>
+               
+                <footer class="slds-modal__footer">
+                    <lightning:button variant="neutral" 
+                                          label="Annuler"
+                                          title="Annuler"
+                                          onclick="{!c.closeModel }"/>
+                    <lightning:button variant="brand" 
+                                          label="Confimer"
+                                          title="Confirmer"
+                                          onclick="{!c.handleAssignment }"/>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+</aura:component>

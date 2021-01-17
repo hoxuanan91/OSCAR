@@ -1,0 +1,225 @@
+<apex:page standardController="Lead" extensions="LLD_FileUploadController" showHeader="true">
+    <style type="text/css">
+        .myFormStyle {background-color: #78879e;}
+        body .bPageBlock .pbBody .purple .pbSubheader{background-color:#713aaa;}
+        .homeTab .bPageBlock {border: none;} 
+        .bPageHeader {display:none;}
+        .button{font-size: 25px;}
+        .col1 {width:100px; text-align:center;}
+        .col2 {width:150px; text-align:center;}
+        .col3 {width:200px; text-align:center;}
+    </style>
+    
+    <script type='text/javascript'>
+    //Taille max du file content
+    var maxStringSize = 6000000;
+    //Liste des documents à ajouter
+    var attachmentList;
+    //Compteur des documents
+    var j;
+    /**
+    * @date 22/05/2019
+    * @description insère un élément html element après un autre
+    * *****/
+    function insertAfter(el, referenceNode) {
+        referenceNode.parentNode.insertBefore(el, referenceNode.nextSibling);
+    }
+
+    /**
+    * @date 22/05/2019
+    * @description insère le message 'Envoi en cours' après avoir cliqué sur le bouton
+    * *****/
+    function insertSendingMessage(){
+        var sendButon = document.getElementsByClassName("sendButton")[0];
+        var span = document.createElement("SPAN");
+        var spanContent = document.createTextNode("Envoi en cours...");
+        
+        span.appendChild(spanContent);
+        insertAfter(span, sendButon);
+        
+        sendButon.style.display = "none";
+    }
+    
+    /**
+    * @date 22/05/2019
+    * @description upload des document
+    * *****/
+    function uploadFiles()
+    {
+        input = document.getElementById('fileinput');
+        
+        if(input != null){
+            attachmentList = input.files;
+            
+            //Remplace le bouton 'Envoyer' par le message 'Envoi en cours'
+            if(j == undefined){
+                j = 0;
+                insertSendingMessage();
+            }
+            
+            var file;
+            
+            //Envoi des documents au controller
+            if(j < attachmentList.length)
+            {
+                file = attachmentList[j];
+                var name = file.name;
+                var reader = new FileReader(); 
+                
+                //Lit et envoie les documents
+                reader.onload = function(e) {  
+                    var attachmentbodybase64 = reader.result.split(',')[1];
+                    if(attachmentbodybase64.length < maxStringSize ){
+ 
+                        saveFileAF(j, attachmentList.length, attachmentbodybase64, name);
+                        j++;
+                    }
+                }
+                reader.readAsDataURL(file);
+            //Demande validation au controller (Pas de document ou tous les documents sont envoyés)
+            }else {       
+                saveFileAF(j, attachmentList.length, ' ', ' ');
+                
+                //Si il y a une erreur, un message d'erreur est affiché
+                if(j > attachmentList.length){
+                    document.forms[0].submit();
+                }
+                
+                j++;
+            }
+        }
+    }
+    </script>
+    
+    <apex:form styleClass="myFormStyle homeTab">
+        <apex:pageBlock title="FICHE DE LIAISON" mode="New">
+            <div style="text-align:center">
+                <img src="{!$Resource.LLD_CarLease_Logo}" styleClass="button" width="300" height="107" />
+            </div>
+            
+            <apex:pageBlockButtons location="bottom" >
+                <style type="text/css">
+                    .button{font-size: 25px;}
+                </style>
+                
+                <apex:commandButton value="Contrôler la saisie" id="validateButton" style="height:35px;width:100px;" action="{!checkEntries}" styleClass="sendButton" rendered="{!!isChecked}" />
+                
+                <apex:actionFunction name="saveFileAF" action="{!saveFile}" status="uploading" oncomplete="if(j <= attachmentList.length + 1){ uploadFiles()}">
+                    <apex:param name="fileCurrentNumber" value="0" assignTo="{!fileCurrentNumber}"/>
+                    <apex:param name="fileTotalNumber" value="0" assignTo="{!fileTotalNumber}"/>
+                    <apex:param name="base64File" value="" assignTo="{!base64}"/>
+                    <apex:param name="fileName" value="" assignTo="{!fileName}"/>
+                </apex:actionFunction>
+            </apex:pageBlockButtons>
+            
+            <apex:outputPanel styleClass="purple homeTab" layout="block" >
+                <apex:pageMessages rendered="true"/>
+                <apex:pageBlockSection title="Ajouter une/des pièce(s) jointe(s)" columns="1" collapsible="false" rendered="{!isChecked}">
+                    <apex:pageBlockSection columns="1">
+                        <apex:pageBlockSectionItem >
+                            <apex:outputLabel for="fileinput"/>
+                            <input type="file" Id="fileinput" multiple="multiple" />
+                        </apex:pageBlockSectionItem>
+                        <apex:commandButton value="Envoyer" id="sendButton" style="height:35px;width:100px;" onclick="uploadFiles(); return false;" styleClass="sendButton" rendered="{!isChecked}" />
+                    </apex:pageBlockSection>
+                </apex:pageBlockSection>
+                <apex:pageBlockSection columns="2">
+                    <apex:pageBlockSection title="Information Banque et Réseau" columns="1" collapsible="false">
+                        <apex:inputField value="{!Lead.Etablissement__c}" required="true"/>
+                        <apex:inputField value="{!Lead.Agence__c}" required="true"/>
+                    </apex:pageBlockSection>
+                    
+                    <apex:pageBlockSection title="Coordonnées Conseiller" columns="1" collapsible="false">
+                        <apex:inputField value="{!Lead.Prenom_conseiller__c}" required="true"/>
+                        <apex:inputField value="{!Lead.Nom_conseiller__c}" required="true" />
+                        <apex:inputField value="{!Lead.Tel_conseiller__c}" required="true"/>
+                        <apex:inputField value="{!Lead.Email_conseiller__c}" required="true"/>
+                    </apex:pageBlockSection>
+                </apex:pageBlockSection>
+                
+                
+                
+                <apex:pageBlockSection columns="2">
+                    <apex:pageBlockSection title="Société" columns="1" collapsible="false">
+                        <apex:inputField value="{!Lead.Company}" id="company" required="true"/>
+                        <apex:inputField value="{!Lead.Activite__c}"/>
+                        <apex:inputField value="{!Lead.Forme_Juridique__c}"/>
+                        <apex:inputField value="{!Lead.SIRET__c}" required="true"/>
+                        <apex:inputField value="{!Lead.Naf__c}" required="true"/>
+                        <apex:inputField value="{!Lead.Street}" required="true"/>
+                        <apex:inputField value="{!Lead.PostalCode}" required="true"/>
+                        <apex:inputField value="{!Lead.City}" required="true"/>                        
+                        <apex:inputField value="{!Lead.Vehicule_en_LLD__c}"/>
+                        <apex:inputField value="{!Lead.Chez_NCL__c}"/>
+                    </apex:pageBlockSection>
+                    
+                    <apex:pageBlockSection title="Coordonnées Client" columns="1" collapsible="false">
+                        <apex:inputField value="{!Lead.Salutation}"/>
+                        <apex:inputField value="{!Lead.FirstName}"/>
+                        <apex:inputField value="{!Lead.LastName}" required="true"/>
+                        <apex:inputField value="{!Lead.Fonction_LLD__c}"/>
+                        <apex:inputField value="{!Lead.Email}" required="true"/>
+                        <apex:inputField value="{!Lead.MobilePhone}" required="true"/>
+                        <apex:inputField value="{!Lead.Phone}" />
+                    </apex:pageBlockSection>
+                </apex:pageBlockSection>
+                
+                <apex:pageBlockSection title="Notation Client" columns="1" collapsible="false">
+                    <apex:pageBlockSection columns="2" >
+                        <apex:inputField value="{!Lead.Note_Bale_II__c}" required="true"/>
+                        <apex:inputField value="{!Lead.Dirigeant_anciennete__c}" required="true"/>
+                        <apex:inputField value="{!Lead.Cotation_BdF__c}" required="true"/>
+                        <apex:inputField value="{!Lead.Date_prise_fonction__c}"/>
+                        <apex:inputField value="{!Lead.Bilan_12_mois__c}" required="true"/>
+                    </apex:pageBlockSection>
+                </apex:pageBlockSection>
+                
+                <apex:pageBlockSection title="Descriptif des véhicules" columns="1" collapsible="false">
+                    <apex:pageBlockSection columns="2" >
+                        <apex:inputField value="{!Lead.Nb_vh__c}"/>
+                        <apex:inputField value="{!Lead.Type_d_urgence__c}"/>                        
+                    </apex:pageBlockSection>
+                    
+                    <apex:pageBlockSection columns="2" >
+                        <apex:inputField value="{!Lead.Marque_Vh__c}"/>
+                        <apex:inputField value="{!Lead.Finition_Vh__c}"/>
+                        <apex:inputField value="{!Lead.Modele_Vh__c}"/>
+                        <apex:inputField value="{!Lead.Option_Vh__c}"/>
+                        <apex:inputField value="{!Lead.Motorisation_Vh__c}"/>  
+                        <apex:inputField value="{!Lead.Accessoire_Vh__c}"  />
+                    </apex:pageBlockSection>
+                    
+                    <apex:pageBlockSection columns="2" >
+                        <apex:inputField value="{!Lead.Contrat_Vh_Duree__c}"/>
+                        <apex:inputField value="{!Lead.Contrat_Vh_Km__c}"/>
+                    </apex:pageBlockSection>
+                    
+                    <apex:pageBlockSection columns="1">
+                        <apex:inputField value="{!Lead.Description_Vehicules__c}" style="width:65%"/>
+                    </apex:pageBlockSection>
+                </apex:pageBlockSection>
+                
+                <apex:pageBlockSection title="Prestations souhaitées" columns="1"  collapsible="false">
+                   <apex:pageBlockSection columns="2" >                   
+                        <apex:inputField value="{!Lead.Vh_remplacement__c}"/>
+                        <apex:inputField value="{!Lead.Carte_carburant__c}"/> 
+                        <apex:inputField value="{!Lead.ProposeePar__c}" required="true"/>  
+                       
+                        <apex:inputField value="{!Lead.Pneumatiques__c}"/>
+                        
+                        <apex:inputField value="{!Lead.Badge_Libert__c}"/>
+                     </apex:pageBlockSection>
+                </apex:pageBlockSection>
+                
+                <apex:pageBlockSection columns="2">
+                    <apex:inputField value="{!Lead.Majoration_1er_loyer__c}"/>
+                    <apex:inputField value="{!Lead.Reprise_Ancien_vehicule__c}"/>
+                </apex:pageBlockSection>
+                
+                <apex:pageBlockSection columns="1">
+                    <apex:inputField value="{!Lead.Remarques__c}" style="width:65%"/>
+                </apex:pageBlockSection>
+            </apex:outputPanel>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

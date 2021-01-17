@@ -1,0 +1,45 @@
+{ 
+   "eligibility":false,
+   "eligibilityCriteria":[ 
+      { 
+         "criteria":"Dossier de type CBM ou LOC FIN",
+         "result":true
+      },
+      { 
+         "criteria":"Exclusions - Cobaillage",
+         "result":true
+      },
+      { 
+         "criteria":"Exclusions - Financement AERONEF",
+         "result":true
+      },
+      { 
+         "criteria":"Exclusions - Réseau BL LEASE EXPANSION",
+         "result":true
+      },
+      { 
+         "criteria":"Hors LOA nautique",
+         "result":true
+      },
+      { 
+         "criteria":"Pouvant porter sur plusieurs matériels",
+         "result":true
+      },
+      { 
+         "criteria":"1 seul fournisseur",
+         "result":true
+      },
+      { 
+         "criteria":"En Délégation banque, DR ou DCR",
+         "result":false
+      },
+      { 
+         "criteria":"Montant du financement est <= à 60K€ HT",
+         "result":true
+      },
+      { 
+         "criteria":"En Délégation banque, DR ou DCR",
+         "result":true
+      }
+   ]
+}

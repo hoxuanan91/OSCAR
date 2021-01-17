@@ -1,0 +1,22 @@
+<apex:page docType="html-5.0" standardController="CalculetteROE__c" extensions="Ctrl08_Quote" tabStyle="CalculetteROE__c"  sidebar="true" showHeader="true" cache="true">
+     <apex:form id="changePrivacyForm">   
+       <apex:pageBlock >
+    	      
+    			<apex:pageBlockSection rendered="{!CasTypeDeProposition==1}">  
+                	<center><apex:commandLink value="Cliquez ici pour valider la création de la Proposition Commerciale" action="{!SaveNewPropositionCommerciale}"  styleClass="btn" style="text-decoration:none"></apex:commandLink></center>
+                </apex:pageBlockSection>
+                <apex:pageBlockSection rendered="{!CasTypeDeProposition==2}">
+                	<center><apex:commandLink value="Cliquez ici pour valider la modification de la Proposition Commerciale" action="{!SaveMAJPropositionCommerciale}"  styleClass="btn" style="text-decoration:none"></apex:commandLink></center>                 
+                </apex:pageBlockSection>
+            	<apex:pageBlockSection rendered="{!CasTypeDeProposition==3}">
+                    <center><apex:commandLink value="La Proposition Commerciale est déjà envoyée, merci de cliquer ici pour retourner sur la Calculette" action="{!Fermer}"  styleClass="btn" style="text-decoration:none"></apex:commandLink></center>
+                </apex:pageBlockSection>
+   			   <apex:pageBlockSection rendered="{!CasTypeDeProposition==4}">
+                    <center><apex:commandLink value="4 Propositions Commerciales sont déjà actives sur le Projet Associé, merci de cliquer ici pour retourner sur la Calculette" action="{!Fermer}"  styleClass="btn" style="text-decoration:none"></apex:commandLink></center>
+                </apex:pageBlockSection>
+           <!--	<apex:pageBlockSection rendered="{!CasTypeDeProposition==5}">
+                	<center><apex:commandLink value="Votre Calculatrice n'est pas valide, merci de la valider" action="{!Fermer}"  styleClass="btn" style="text-decoration:none"></apex:commandLink> </center>                 
+                </apex:pageBlockSection> -->
+         </apex:pageBlock>
+    </apex:form>
+</apex:page>

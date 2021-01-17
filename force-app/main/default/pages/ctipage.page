@@ -1,0 +1,152 @@
+<apex:page standardController="Task">
+	<apex:stylesheet value="{!$Resource.iwsstyle}" />
+
+	<!-- SFDC LIGHTINING import opencti for lightning version -->
+	<apex:includeScript value="/support/api/43.0/lightning/opencti_min.js" />
+
+	<!-- SFDC CLASSIC import interaction for classic version 
+	<apex:includeScript value="/support/api/43.0/interaction.js" />
+	-->
+	
+	<!-- OMNI import softphone_it__omniUtils for omni integrations
+		<apex:includeScript value="{!$Resource.softphone_it__rxjs}" />
+		<apex:includeScript value="{!$Resource.softphone_it__omniUtils}" />
+	-->
+	<apex:includeScript value="/soap/ajax/43.0/connection.js" />
+	<apex:includeScript value="/soap/ajax/43.0/apex.js" />
+	<apex:includeScript value="/support/console/43.0/integration.js" />
+	<apex:includeScript value="{!$Resource.jquery}" />
+	<apex:includeScript value="{!$Resource.softphone_connector_core}" />
+	
+	<!-- PURE CLOUD import softphone_it__pureClientSdkBundle for pure cloud integrations
+	<apex:includeScript value="{!$Resource.softphone_it__pureClientSdkBundle}" />
+	-->
+
+	<apex:includeScript value="{!$Resource.iwsutil}" />
+	<apex:includeScript value="{!$Resource.iwsprescript}" />
+	<apex:includeScript value="{!$Resource.iwsscript}" />
+	<!-- OMNI import softphone_it__omniUtils for omni integrations
+		<apex:includeScript value="{!$Resource.iwsscript_omni}" />
+	-->
+	<apex:includeScript value="{!$Resource.iwsconfig}" />
+
+	<script>
+		var c = '{!GETSESSIONID()}';
+		console.log("sessionId=" + c);
+		sforce.connection.sessionId = '{!GETSESSIONID()}';
+		var isLightning = "{!CONTAINS($CurrentPage.URL, 'lightning.force.com')}" == 'true';
+		console.log("isLightning=" + isLightning);
+	</script>
+
+<!-- START WDE IMPLEMENTATION -->
+	<script type="text/javascript">
+		var logMessages;
+		var saveLog;
+
+		$(document).ready(function () {
+			logMessages = [];
+			saveLog = false;
+			$(".version").text("Softphone WDE Connector - core version : " + iwscore.getVersion());
+			console.log = function (log) {
+				return function () {
+					var args = Array.prototype.slice.call(arguments);
+					$(".logs ul").append("<li><p>{0}</p></li>".format(args));
+					if (saveLog) {
+						logMessages.push(args);
+					}
+					log.apply(console, args);
+				};
+			}(console.log);
+		});
+
+		function clearLog() {
+			$(".logs ul").empty();
+			logMessages = [];
+		}
+
+		function updateSaveLog() {
+			var c = $("#saveLogs").prop('checked')
+			saveLog = c;
+		}
+
+		function download() {
+			var element = document.createElement('a');
+			var content = "";
+			for (var i = 0; i < logMessages.length; i++) {
+				content += logMessages[i];
+				content += "\n";
+			}
+			element.setAttribute('href', 'data:text/plain;charset=utf-8,'
+				+ encodeURIComponent(content));
+			element.setAttribute('download', "log");
+			element.style.display = 'none';
+			document.body.appendChild(element);
+			element.click();
+			document.body.removeChild(element);
+		}
+
+		function toggleExpand() {
+			var h = $('.logs').height();
+			var lh = h == '0' ? 300 : 0;
+			$('.logs').height(lh);
+			$('.buttons').toggle();
+			var t = h == '0' ? '-' : '+';
+			$('#expand').prop('value', t);
+		}
+
+		function getVersion() {
+			return iwscore.getVersion();
+		}
+
+	</script>
+
+
+	<body>
+		<div id="IWSConnectorToolbar" name="IWSConnectorToolbar" style="display: none"></div>
+		<div class="container-wde">
+			<div class="header">
+				<img src="{!$Resource.logo_softphone}" />
+				<p class="title"></p>
+				<p class="version"></p>
+			</div>
+
+			<div class="led-msg">
+				<div id="led"></div>
+				<p></p>
+				<div class="btn-logs">
+					<label>Logs</label>
+					<input type='button' onclick="toggleExpand()" id="expand" value="+"></input>
+				</div>
+			</div>
+			<div class="buttons" style="display: none">
+				<input id="saveLogs" type="checkbox" onchange="updateSaveLog()" />
+				<label>Save logs
+				</label>
+				<button onclick="download()">Download</button>
+				<button onclick="clearLog()">Clear</button>
+			</div>
+			<div class="logs">
+				<ul></ul>
+			</div>
+		</div>
+	</body>
+
+	<!-- END WDE IMPLEMENTATION -->
+	
+	<!-- START PURE-EMBEDDABLE IMPLEMENTATION -->
+	<!--
+	<body>
+			<apex:iframe height="400px" width="100%" scrolling="true" id="pureFrame" />
+	</body>
+	-->
+	<!-- END PURE-EMBEDDABLE IMPLEMENTATION -->
+
+	<!-- START WWE IMPLEMENTATION -->
+	<!--
+	<body>
+			<apex:iframe height="100%" width="100%" scrolling="true" id="wweFrame" />
+	</body>
+	-->
+	<!-- END WWE IMPLEMENTATION -->
+
+</apex:page>

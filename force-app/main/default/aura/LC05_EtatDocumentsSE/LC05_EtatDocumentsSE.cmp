@@ -1,0 +1,59 @@
+<aura:component implements="force:lightningQuickActionWithoutHeader,flexipage:availableForAllPageTypes,force:hasRecordId" access="global" controller="LTNG05_EtatDocumentsSE">
+    <!-- Attributes -->
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="dataWrapper" type="Map" />
+
+    <!-- Handlers -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <aura:if isTrue="{!or(not(empty(v.dataWrapper.docsWP)), not(empty(v.dataWrapper.signWP)))}">
+        <article class="slds-card">
+            <div class="slds-border_bottom">
+                <div class="slds-card__header slds-grid">
+                    <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                        <div class="slds-media__figure">
+                            <lightning:icon iconName="standard:contract" alternativeText="esignature" title="esignature" />
+                        </div>
+                        <div class="slds-media__body">
+                            <h2 class="slds-card__header-title">Signature Électronique - État des documents</h2>
+                        </div>
+                    </header>
+                </div>
+            </div>
+            <div class="slds-card__body slds-card__body_inner">
+                <div class="slds-grid slds-wrap">
+                    <aura:iteration items="{!v.dataWrapper.docsWP}" var="doc">
+                        <div class="slds-var-p-bottom_x-small slds-size_1-of-1  slds-var-p-left_x-small">
+                            <p><b>{!doc.docSE.RecordType.Name} - </b>
+                            <aura:if isTrue="{!doc.hasSignataire}">
+                                <a href="{!'/one/one.app?#/sObject/'+ doc.docSE.Signataire__c + '/view'}" target="_blank">{!doc.docSE.Signataire__r.Prenom__c + ' ' + doc.docSE.Signataire__r.Nom__c} </a>
+                            </aura:if>
+                            : {!doc.dateToUse}</p>
+                        </div>
+                        <div class="slds-var-p-bottom_x-small slds-size_1-of-1  slds-var-p-left_x-small">
+                            <div style="{!'background:' + doc.docSE.TECH_Color__c + ';color:white;border:2px solid white;border-radius:25px;'}">
+                                <center>{!doc.docSE.EtatDocument__c}</center>
+                            </div>
+                        </div>
+                    </aura:iteration>
+                    <aura:if isTrue="{!not(empty(v.dataWrapper.signWP))}">
+                    	<div class="slds-var-p-bottom_x-small slds-size_1-of-1  slds-var-p-left_x-small">
+                           	<p><b>Assurance</b></p>
+                        </div>
+                        <aura:iteration items="{!v.dataWrapper.signWP}" var="sign">
+                            <div class="slds-var-p-bottom_x-small slds-size_1-of-1  slds-var-p-left_x-small">
+                                <a href="{!'/one/one.app?#/sObject/'+ sign.signSE.Id + '/view'}" target="_blank">{!sign.signSE.Prenom__c + ' ' + sign.signSE.Nom__c} </a>
+                                : {!sign.dateToUse}</div>
+                            <div class="slds-var-p-bottom_x-small slds-size_1-of-1  slds-var-p-left_x-small">
+                                <!--<div style="{!'background:' + doc.docSE.TECH_Color__c + ';color:white;border:2px solid white;border-radius:25px;'}">
+                                    <center>{!doc.docSE.EtatDocument__c}</center>
+                                </div>-->
+                            </div>
+                        </aura:iteration>
+                    </aura:if>
+                </div>
+            </div>
+            <footer class="slds-card__footer"></footer>
+        </article>
+    </aura:if>
+</aura:component>

@@ -1,0 +1,28 @@
+<aura:component implements="force:hasRecordId,flexipage:availableForAllPageTypes" access="global">
+    
+    <aura:attribute name="emailField_1" type="String"/>
+    <aura:attribute name="buttonLabel_1" type="String"/>
+    <aura:attribute name="ObjectName_1" type="String"/>
+    
+    
+    <aura:attribute name="emailField_2" type="String"/>
+    <aura:attribute name="buttonLabel_2" type="String"/>
+    <aura:attribute name="ObjectName_2" type="String"/>
+    
+    <div class="slds-grid slds-gutters">
+        <div class="slds-col">
+            <c:wdeSendMail emailField="{!v.emailField_1}"
+                           buttonLabel="{!v.buttonLabel_1}"
+                           ObjectName="{!v.ObjectName_1}"
+                           recordId="{!v.recordId}"/>
+            
+                        <c:wdeSendMail emailField="{!v.emailField_2}"
+                           buttonLabel="{!v.buttonLabel_2}"
+                           ObjectName="{!v.ObjectName_2}"
+						   recordId="{!v.recordId}"/>
+        </div>
+    </div>
+
+
+
+</aura:component>

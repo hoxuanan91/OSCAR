@@ -1,0 +1,104 @@
+<aura:component description="CreateCaseCBMSav" controller="LTNG01_CreateCaseGeneric">
+    <!-- Attributes -->
+    <aura:attribute name="recordTypeDeveloperName" type="String" />
+    <aura:attribute name="recordForm" type="Map" />
+    <aura:attribute name="currentZoneRecommandation" type="String" />
+    <aura:attribute name="currentLabelCase" type="String" />
+    <aura:attribute name="modalCancel" type="String" default="Annuler" />
+    <aura:attribute name="modalConfirm" type="String" default="Confirmer" />
+    <aura:attribute name="modalTitle" type="String" default="{!v.currentLabelCase}" />
+    <aura:attribute name="modalSizeLarge" type="Boolean" default="true" />
+
+    <!-- Methods -->
+    <aura:method name="onConfirm" description="confirm method" action="{!c.onConfirm}"
+    />
+    <aura:method name="onClose" description="close method" action="{!c.onClose}" />
+
+    <!-- Event -->
+    <aura:registerEvent name="createCase" type="c:EVT_CreateCase" />
+    <!-- Library -->
+    <c:FunctionUtils aura:id="FunctionUtils" />
+    <!-- Notification -->
+    <lightning:notificationsLibrary aura:id="notifLib" />
+    <!-- Spinner -->
+    <aura:attribute name="showSpinner" type="Boolean" default="false" />
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner variant="brand" size="large" class="slds-is-fixed" style="z-index:99999;"
+        />
+    </aura:if>
+
+
+    <section aria-describedby="dialog-body-id-2" aria-label="Dialog Title" class="slds-popover slds-popover_walkthrough slds-popover_feature slds-nubbin_left slds-popover_full-width"
+        role="dialog">
+        <div class="slds-popover__body" id="dialog-body-id-2">
+            <div class="slds-media">
+                <div class="slds-media__body">
+                    <p class="slds-text-heading_small">
+                        <aura:unescapedHtml value="{!v.currentZoneRecommandation}"></aura:unescapedHtml>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="slds-grid slds-gutters slds-p-top_small">
+        <div class="slds-col slds-p-top_medium">
+            <lightning:input type="checkbox" label="Autre Sav" name="autreSav" checked="{!v.recordForm.autreSav}"
+            />
+        </div>
+        <div class="slds-col">
+            <lightning:input type="text" label="Détail du SAV" name="detailSav" value="{!v.recordForm.detailSav}"
+            />
+        </div>
+    </div>
+    
+        <div class="slds-grid slds-gutters slds-p-top_small">
+        <div class="slds-col slds-p-top_medium">
+            <lightning:input type="checkbox" label="Duplicata" name="duplicata" checked="{!v.recordForm.duplicata}"
+            />
+        </div>
+        <div class="slds-col">
+            <lightning:input type="text" label="Détail du duplicata" name="detailDuDuplicata"
+                value="{!v.recordForm.detailDuDuplicata}" />
+        </div>
+    </div>
+    
+
+    <div class="slds-grid slds-gutters slds-p-top_small">
+        <div class="slds-col">
+            <lightning:input type="checkbox" label="Duplicata certificat de vente" name="duplicataCertificatDeVente"
+                checked="{!v.recordForm.duplicataCertificatDeVente}" />
+        </div>
+
+        <div class="slds-col">
+            <lightning:input type="checkbox" label="Mandat Immatriculation" name="mandatImmatriculation"
+                checked="{!v.recordForm.mandatImmatriculation}" />
+        </div>
+    </div>
+
+
+
+
+    <div class="slds-grid slds-gutters slds-p-top_small">
+        <div class="slds-col">
+            <lightning:input type="checkbox" label="Changement Adresse" name="changementAdresse"
+                checked="{!v.recordForm.changementAdresse}" />
+        </div>
+
+        <div class="slds-col">
+            <lightning:input type="checkbox" label="Attestation" name="attestation" checked="{!v.recordForm.attestation}"
+            />
+        </div>
+    </div>
+
+    <div class="slds-col slds-p-horizontal_small slds-size_1-of-1 slds-form slds-form_stacked">
+        <lightning:textarea name="commentaire" label="Commentaire" value="{!v.recordForm.commentaire}"
+        />
+    </div>
+
+    <footer class="slds-modal__footer" style="padding: 0.50rem 1rem;">
+        <lightning:button label="Annuler" onclick="{!c.onClose}" />
+        <lightning:button label="Confirmer" onclick="{!c.onConfirm}" variant="brand" />
+    </footer>
+
+</aura:component>

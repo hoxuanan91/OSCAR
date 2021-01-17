@@ -1,0 +1,12 @@
+.THIS.warning_text {
+    background-color: orange;
+    color: white;
+}
+.THIS.valid_text {
+    background-color: green;
+    color: white;
+}
+.THIS.alert_text {
+    background-color: red;
+    color: white;
+}

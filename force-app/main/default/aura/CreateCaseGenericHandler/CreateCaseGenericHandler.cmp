@@ -1,0 +1,122 @@
+<aura:component description="CreateCaseGenericHandler"
+                implements="force:lightningQuickActionWithoutHeader,force:hasRecordId,force:hasSObjectName"
+                controller="LTNG01_CreateCaseGeneric">
+    <!--<ltng:require styles="{!$Resource.quickActionStyle}"/>-->
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <!-- Attributes -->
+    <aura:attribute name="recordId" type="Id"/>
+    <aura:attribute name="sObjectName" type="String"/>
+
+    <aura:attribute name="recordTypeDeveloperName" type="String" default="CBM_Reclamation" />
+    <aura:attribute name="componentName" type="String" default=""/>
+    <aura:attribute name="componentLightningByCaseRecordType" type="Map"/>
+    <aura:attribute name="recordForm" type="Map"/>
+    <aura:attribute name="currentLabelCase" type="String" default="Création demande"/>
+    <aura:attribute name="currentZoneRecommandation" type="String"/>
+    <aura:attribute name="_baseRecordForm" type="Map" default="{
+                                                                    prixHT : null,
+                                                               		dureeEnMois : null
+                                                               }"/>
+    <!-- Liste des RecordTypes du Case -->
+    <aura:attribute name="options" type="List" default="[
+        {'label': 'CBM - Proposition de rachat anticipé', 'value': 'CBM_Proposition_de_rachat_anticip'  },
+        {'label': 'CBM - Domiciliation bancaire', 'value': 'CBM_Domiciliation_bancaire'},
+        {'label': 'CBM - Décès', 'value': 'CBM_Deces'},
+        {'label': 'CBM - Incapacité', 'value': 'CBM_Incapacite'},
+        {'label': 'CBM - Relocation', 'value': 'CBM_Relocation'},
+        {'label': 'CBM - Réaménagement', 'value': 'CBM_Reamenagement'},
+        {'label': 'CBM - Réclamation', 'value': 'CBM_Reclamation'},
+        {'label': 'CBM - SAV', 'value': 'CBM_SAV'},
+        {'label': 'CBM - Sinistre matériel', 'value': 'CBM_Sinistre_materiel'},
+        {'label': 'CBM - Transfert', 'value': 'CBM_Transfert'},
+        {'label': 'CBM - Transfert (Pilote DCR3)', 'value': 'CBM_Transfert_Pilote_DCR3'},
+        {'label': 'CBM - Vente fonds de commerce', 'value': 'CBM_Vente_fonds_de_commerce'},
+		{'label': 'CBM - Valorisation', 'value': 'CBM_Valorisation'}
+    ]"/>
+    <!-- Event -->
+    <aura:handler name="createCase" event="c:EVT_CreateCase" action="{!c.createCase}"/>
+    <!-- Library -->
+    <c:FunctionUtils aura:id="FunctionUtils"/>
+    <!-- Notification -->
+    <lightning:notificationsLibrary aura:id="notifLib"/>
+    <!-- Spinner -->
+    <aura:attribute name="showSpinner" type="Boolean" default="false"/>
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner variant="brand" size="large" class="slds-is-fixed" style="z-index:99999;"/>
+    </aura:if>
+
+
+    <header class="slds-modal__header">
+        <h2 class="slds-text-heading--medium">
+            {!v.currentLabelCase}
+        </h2>
+    </header>
+    <div>
+        <aura:if isTrue="{!empty(v.componentName)}">
+            <div id="rt-lineHeight" class="slds-size--1-of-1 slds-p-around--small">
+
+                <div class="slds-p-left--xx-large slds-p-top--x-medium">
+                    <lightning:radioGroup name="radioGroup"
+                                          label="Sélectionne un type d'enregistrement"
+                                          options="{! v.options }"
+                                          value="{! v.recordTypeDeveloperName}"
+                                          type="radio"/>
+                </div>
+
+
+            </div>
+            <footer class="slds-modal__footer" style="padding: 0.50rem 1rem;">
+                <lightning:button label="Annuler" onclick="{!c.closeModal}"/>
+                <lightning:button label="Suivant" onclick="{!c.nextStep}" variant="brand"/>
+            </footer>
+        </aura:if>
+
+        <aura:if isTrue="{!v.componentName == 'CreateCaseGeneric'}">
+            <c:CreateCaseGeneric recordTypeDeveloperName="{!v.recordTypeDeveloperName}"
+                                 recordForm="{!v.recordForm}"
+                                 currentZoneRecommandation="{!v.currentZoneRecommandation}"
+                                 currentLabelCase="{!v.currentLabelCase}"/>
+        </aura:if>
+
+        <aura:if isTrue="{!v.componentName == 'CreateCaseCBMReclamation'}">
+            <c:CreateCaseCBMReclamation recordTypeDeveloperName="{!v.recordTypeDeveloperName}"
+                                        recordForm="{!v.recordForm}"
+                                        currentZoneRecommandation="{!v.currentZoneRecommandation}"
+                                        currentLabelCase="{!v.currentLabelCase}"/>
+        </aura:if>
+
+        <aura:if isTrue="{!v.componentName == 'CreateCaseCBMSav'}">
+            <c:CreateCaseCBMSav recordTypeDeveloperName="{!v.recordTypeDeveloperName}"
+                                recordForm="{!v.recordForm}"
+                                currentZoneRecommandation="{!v.currentZoneRecommandation}"
+                                currentLabelCase="{!v.currentLabelCase}"/>
+        </aura:if>
+
+        <aura:if isTrue="{!v.componentName == 'CreateCaseCBMValorisation'}">
+            <c:CreateCaseCBMValorisation recordTypeDeveloperName="{!v.recordTypeDeveloperName}"
+                                         recordForm="{!v.recordForm}"
+                                         currentZoneRecommandation="{!v.currentZoneRecommandation}"
+                                         currentLabelCase="{!v.currentLabelCase}"/>
+        </aura:if>
+
+        <aura:if isTrue="{!v.componentName == 'CreateCaseCBMTransfert'}">
+            <c:CreateCaseCBMTransfert    recordTypeDeveloperName="{!v.recordTypeDeveloperName}"
+                                         recordForm="{!v.recordForm}"
+                                         currentZoneRecommandation="{!v.currentZoneRecommandation}"
+                                         currentLabelCase="{!v.currentLabelCase}"/>
+        </aura:if>
+        <aura:if isTrue="{!v.componentName == 'CreateCaseCBMTransfertPilote'}">
+            <c:CreateCaseCBMTransfertPilote    recordTypeDeveloperName="{!v.recordTypeDeveloperName}"
+                                         recordForm="{!v.recordForm}"
+                                         currentZoneRecommandation="{!v.currentZoneRecommandation}"
+                                         currentLabelCase="{!v.currentLabelCase}"/>
+        </aura:if>
+
+        <aura:if isTrue="{!v.componentName == 'NOT IMPLEMENTED'}">
+            NOT IMPLEMENTED
+        </aura:if>
+    </div>
+
+</aura:component>

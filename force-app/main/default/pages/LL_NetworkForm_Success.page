@@ -1,0 +1,32 @@
+<apex:page showHeader="false"> 
+    
+    <!--VisualForce Page de succès lors de l'envoi du formulaire LLD Fiche de liasion-->
+    
+    <style type="text/css">
+        .myFormStyle,  {background-color: #78879e;}
+        body .purple .pbSubheader{background-color:#713aaa;}
+        .homeTab {border: none;}
+        html {height:100vh;}
+        .completedText 
+    </style>
+    
+    <apex:pageBlock title="Formulaire envoyé">
+        <div style="text-align:center; margin-bottom:30px;">
+            <img src="{!$Resource.LLD_CarLease_Logo}" styleClass="button" width="300" height="107" />
+        </div>
+        <apex:outputPanel styleClass="purple homeTab" layout="block" >
+            <apex:pageBlockSection title=" "  columns="2" collapsible="false"  id="section1">
+            </apex:pageBlockSection>
+        </apex:outputPanel>
+        
+        <div style="margin:auto; display: flex; width: 300px; padding-top:40px;">
+            <div style="flex: 50%;">
+                <img src="{!$Resource.LLD_Check_icon}" styleClass="button" width="100" height="100"/>
+                
+            </div>
+            <div style="flex: 50%;padding-top: 10px; font-size: 18px; font-weight: bold;">
+                    Votre formulaire a bien été envoyé à la VAD
+            </div>
+        </div>
+    </apex:pageBlock>
+</apex:page>

@@ -1,0 +1,89 @@
+<aura:component implements="force:appHostable" controller="ReloadDataAdministratorCtr" access="global">
+    <aura:attribute name="currentDate" type="Date" />
+    <aura:attribute name="objectName" type="String" />
+     <aura:attribute name="operation" type="String" />
+    <aura:attribute name="jobList" type="List" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+  <div  style="float:right;margin:1em"><lightning:button label="Plannifier dans le prochain chargement" onclick="{!c.executeJobBulk}"/></div>
+    
+    <div class="slds-grid slds-gutters">
+  <div class="slds-col">
+   <ui:inputDate  label="Select Date" class="field" value="{!v.currentDate}" displayDatePicker="true" /> 
+  </div>
+  <div class="slds-col">
+    <ui:inputText label="Object Name" class="field" value="{!v.objectName}"/>
+  </div>
+  <div class="slds-col">
+    <ui:inputText label="operation" class="field" value="{!v.operation}"/>
+  </div>
+  <div class="slds-col">
+    <ui:button  class="button" label="Search" press="{!c.search}"/>
+  </div>
+</div>
+	
+    
+    
+    
+    
+    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+        <thead>
+            <tr class="slds-line-height_reset">
+                <th class="" scope="col">
+                    <div class="slds-truncate">Plannifier dans le prochain chargement</div>
+                </th>
+                <th class="" scope="col">
+                    <div class="slds-truncate" >Id de Job</div>
+                </th>
+                <th class="" scope="col">
+                    <div class="slds-truncate">Date de ré-execution</div>
+                </th>
+                <th class="" scope="col">
+                    <div class="slds-truncate">Date de l'execution</div>
+                </th>
+                
+                <th class="" scope="col">
+                    <div class="slds-truncate">Opération</div>
+                </th>
+                <th class="" scope="col">
+                    <div class="slds-truncate" >Non de l'objet</div>
+                </th>
+                
+                <th class="" scope="col">
+                    <div class="slds-truncate">Clé exetenieur</div>
+                </th>
+             
+            </tr>
+        </thead>
+        <tbody>
+            <aura:iteration items="{!v.jobList}" var="job">
+                <tr class="slds-hint-parent">
+                    <th scope="row">
+                        <ui:inputCheckbox  value="{!job.ScheduledNextLoad__c}"/>
+                    </th>
+                    <th scope="row">
+                        <div class="slds-truncate" ><a target="_blank" href="{!'/' + job.JobBulkId__c}">{!job.JobBulkId__c}</a></div>
+                    </th>
+                    <th scope="row">
+                        
+                        <div class="slds-truncate"><lightning:formattedDateTime value="{!job.RelaodedDate__c}" year="numeric" month="numeric" day="numeric" hour="2-digit"
+                                 minute="2-digit" timeZoneName="short" hour12="true"/></div>
+                    </th>
+                    <th >
+                        <div class="slds-truncate" ><lightning:formattedDateTime value="{!job.CreatedDate__c}" year="numeric" month="numeric" day="numeric" hour="2-digit"
+                                 minute="2-digit" timeZoneName="short" hour12="true"/></div>
+                    </th>
+                    <th scope="row">
+                        <div class="slds-truncate">{!job.Operation__c}</div>
+                    </th>
+                    <th scope="row">
+                        <div class="slds-truncate">{!job.ObjectName__c}</div>
+                    </th>
+                    <th scope="row">
+                        <div class="slds-truncate">{!job.ExternalId__c}</div>
+                    </th>
+                    
+                </tr>
+            </aura:iteration>
+        </tbody>
+    </table>
+</aura:component>

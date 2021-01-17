@@ -1,0 +1,74 @@
+<apex:page docType="html-5.0" standardController="Bien_CBI__c" extensions="Ctrl02_GestionDocumentaireAddons" tabStyle="Bien_CBI__c"  sidebar="true" showHeader="true">  
+  
+     <apex:form id="changePrivacyForm"> 
+         <apex:pageBlock >
+            <apex:outputPanel ><a href="VFP02_GestionDocumentElectroniqueBien?id={!IDDuBien}">Retour</a></apex:outputPanel> 
+      </apex:pageBlock>
+         
+      <apex:pageBlock title="Liste des documents élèctroniques">      
+      <apex:pageBlockSection title="Bien : {!NomDuBien}"  columns="1"  collapsible="true" id="Projet">  
+          <apex:pageBlock title="{!Section}"> 
+            <apex:pageBlock title="{!Categorie}"> 
+                      <apex:pageBlockSection title=" {!Repertoire} "  columns="1"  > 
+                          <apex:pageBlock >
+                              <table> 
+                                 <tr style="height: 20px;">
+                                        <td ><b>Nom du fichier</b></td> 
+                                        <td><b>Document(s) Joint(s)</b></td>  
+                                </tr> 
+                                            <apex:repeat value="{!ListDocElecBien}" var="key4"> 
+                                                       <apex:variable var="Link" value="{!key4['LienDuDocument__c']}" /> 
+                                                       <apex:variable var="Type" value="{!key4['TypeDuDocument__c']}" /> 
+                                                       <apex:variable var="NomDuDoc" value="{!key4['NomDuFichierCharge__c']}" />  
+                                                 
+                                                  <apex:outputPanel >
+                                                  <tr style="height: 25px;"> 
+                                                    <td>
+                                                        <apex:outputPanel rendered="{!IF(ISNULL(Link) , false , true)}"><a href='/sfc/#version/{!Link}' target='_blank'>{!NomDuDoc}</a></apex:outputPanel>
+                                                        <apex:outputPanel rendered="{!IF(ISNULL(Link) , true , false)}"> {!NomDuDoc} </apex:outputPanel>
+                                                    </td>
+                                                    
+                                                    <td> 
+                                                        <apex:inputCheckbox style="margin-left: 50%;" value="{!key4['DocCharge__c']}" disabled="true"    />
+                                                    </td>
+                                                    <td>
+                                                        <apex:inputField value="{!key4['DateValidite__c']}" type="auto"   showDatePicker="false" style="width:130px;" />                                                       
+                                                    </td> 
+                                                    
+                                   					<td>
+                                                        <apex:commandLink action="{!DeleteFileAndDA}" value="Supprimer" styleClass="btn" style="text-decoration:none"  onclick="if(!confirm('Voulez-vous vraiment supprimer le document?')){return false;}">
+                                                                <apex:param name="TypeDobjet" value="bien" assignTo="{!TypeDobjet}" ></apex:param>
+                                                                <apex:param assignTo="{!IDDocToDelete}" value="{!key4['ID']}" name="IDDocToDelete"/>
+                                                        </apex:commandLink>	  
+                                                    </td>  
+                                                </tr>
+                                                      
+                                                </apex:outputPanel>         
+                                          </apex:repeat> 
+                                 
+                              </table>    
+                          </apex:pageBlock>
+                          <apex:pageBlock >
+                                 Répertoire Complet : <apex:inputCheckbox value="{!isRepertoireComplet}" disabled="false"    /> 
+                          </apex:pageBlock>
+                          <apex:commandLink value="Enregistrer les modifications" action="{!SaveDateValiditeCompletudeRepertoire}"  styleClass="btn" style="text-decoration:none">
+                                                                         <apex:param name="Type" value="{Type}" assignTo="{!CategorieParam}"/> 
+                              											<apex:param name="DAID" value="{!DAIDParam}" assignTo="{!DAIDParam}" /> 
+                              											<apex:param name="TypeDobjet" value="bien" assignTo="{!TypeDobjet}" />
+                              											
+                          												
+                         </apex:commandLink>
+                      </apex:pageBlockSection> 
+               
+            </apex:pageBlock>
+          </apex:pageBlock>
+       </apex:pageBlockSection> 
+        
+      
+     
+            
+    </apex:pageBlock>   
+        
+ </apex:form>
+ 
+</apex:page>

@@ -1,0 +1,126 @@
+<apex:page standardController="Account" showHeader="true" extensions="Ctrl12_FormulaireCovidCBI" id="pageId">
+
+    <style type="text/css">
+        .myFormStyle {background-color: #78879e;}
+        body .bPageBlock .pbBody .purple .pbSubheader{background-color:#713aaa;}
+        .homeTab .bPageBlock {border: none;} 
+        .bPageHeader {display:none;}
+        .button{font-size: 25px;}
+        .col1 {width:100px; text-align:center;}
+        .col2 {width:150px; text-align:center;}
+        .col3 {width:200px; text-align:center;}
+        .myCheckbox {display: inline-block; float: left;}
+    </style>
+
+    <script type="text/javascript">
+
+
+        function disabledOption(id){
+            
+            console.log('{!thirdValue}');
+
+            if('{!thirdValue}' == 'false'){
+                var optionId = 'thirdValue' + id.replace('arChoice', '');
+                document.getElementById(optionId).disabled = true;
+            }
+        }
+
+        function onChangeChoice(id){
+
+            var value = document.getElementById(id).value;
+
+            var optionId = 'optionChoice' + id.replace('arChoice', '');
+
+            if(value === 'Accord'){
+                document.getElementById(optionId).disabled = false;
+                console.log(document.getElementById(optionId).disabled);
+            }
+            else{
+                document.getElementById(optionId).disabled = true;
+                console.log(document.getElementById(optionId).disabled);
+            }
+            onChangeAPEX(value, id);
+        }
+
+        function onChangeOption(id){
+            var value = document.getElementById(id).value;
+            console.log(value);
+            onChangeAPEX(value, id);
+        }
+    
+    </script>
+
+
+   
+    <apex:form styleClass="myFormStyle homeTab" id="formId">
+
+        <apex:actionFunction name="onChangeAPEX" action="{!onChangeAPEX}" reRender="none">
+            <apex:param name="choice" value=""/>
+            <apex:param name="contractName" value=""/>
+        </apex:actionFunction>
+
+        <apex:pageBlock title="Formulaire de report" mode="New" id="blockId">
+            <div style="">
+                <img src="{!$Resource.BPCE_Lease}" styleClass="button"  style="padding-bottom:10px;" />
+            </div>
+            
+            <div style="text-align:center" id="divId">
+                <apex:outputPanel styleClass="purple homeTab" layout="block" style="width:50%;" id="panelId">
+
+                    <apex:pageBlockSection title="Formulaire" columns="1" collapsible="false" id="sectionId">
+                        
+                        <apex:pageMessages rendered="true"/>
+
+                        <apex:pageBlockSection columns="2">
+                            <apex:inputText label="Je soussigné" value="{!soussigne}" required="true" id="jeSoussigne" />
+                            <apex:inputText label="Agissant en qualité de" value="{!qualiteDe}" required="true" id="enQualiteDe" />
+                        </apex:pageBlockSection>
+
+                        <apex:pageBlockSection columns="1">
+                            <apex:outputText value="{!mention}" />
+                        </apex:pageBlockSection>
+
+                        <apex:pageBlockSection columns="1" rendered="{!and(!allContractsResponded, isNext)}" id="rerenderTable">
+                            <table style="width:100%;" id="tableChoice">
+                                <thead>
+                                    <tr>
+                                        <th style="width:10%;">Référence</th>
+                                        <th style="width:30%;">Nom du dossier</th>
+                                        <th style="width:20%;">Accepte/Refuse</th>
+                                        <th style="{!if(duree == 'COURT' ,'width:20%;', 'display:none;')}">Option</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <apex:repeat value="{!contractsWrapper}" var="contractWrapper">
+                                        <tr>
+                                            <td>{!contractWrapper.contract.Name}</td>
+                                            <td>{!contractWrapper.contract.Nom_du_dossier__c}</td>
+                                            <td>
+                                                <select name="arChoice" id="{!'arChoice' + contractWrapper.contract.Name}" onchange="onChangeChoice(this.id)" onclick="disabledOption(this.id)">
+                                                    <option value="Aucun">-- Aucun --</option>
+                                                    <option value="Accord">Accepte le report de 6 mois</option>
+                                                    <option value="Refus">Refuse le report de 6 mois</option>
+                                                    <option id="{!'thirdValue' + contractWrapper.contract.Name}" value="Report">Demande expresse d'un report de 12 mois</option>
+                                                </select>
+                                            </td>
+                                            <td style="{!if(duree == 'COURT' , '', 'display:none;')}" id="options">
+                                                <select name="optionChoice" id="{!'optionChoice' + contractWrapper.contract.Name}" onchange="onChangeOption(this.id)" disabled="true">
+                                                    <option value="Aucun">-- Aucune --</option>
+                                                    <option value="Paiement au dernier loyer">Option 1 : Paiement au dernier loyer</option>
+                                                    <option value="Paiement échelonné">Option 2 : Paiement échelonné</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                    </apex:repeat>
+                                </tbody>
+                            </table>
+                        </apex:pageBlockSection>
+                    </apex:pageBlockSection>
+                    <apex:commandButton value="Suivant" action="{!nextStep}" rendered="{!and(!allContractsResponded, !isNext)}"/>
+                    <apex:commandButton value="Envoyer" action="{!sendForm}" rendered="{!and(!allContractsResponded, isNext)}"/>
+                </apex:outputPanel>
+            </div>
+        </apex:pageBlock>
+    </apex:form>
+
+</apex:page>

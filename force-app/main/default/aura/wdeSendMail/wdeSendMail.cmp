@@ -1,0 +1,15 @@
+<aura:component implements="force:hasRecordId,flexipage:availableForAllPageTypes" access="global" controller="wdeSendMailCtr">
+
+    <aura:attribute name="recordId" type="String"/>
+    
+    <aura:attribute name="emailField" type="String"  default="Email"/>
+    <aura:attribute name="buttonLabel" type="String" default="Nouvel Email"/>
+    <aura:attribute name="ObjectName" type="String" default="Contact"/>
+    
+    <aura:attribute name="Email" type="String"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <ui:button label="{!v.buttonLabel}" press="{!c.sendEmail}"/>
+	
+</aura:component>

@@ -1,0 +1,52 @@
+<aura:component access="global">
+    
+    <aura:method access="global" name="showMessageInfo" action="{!c.showMessageInfo}" description="Open Toast INFORMATION (color=grey)">
+        <aura:attribute name="message" type="String" required="true" description="Message"/>
+    </aura:method>
+    
+    <aura:method access="global" name="showMessageSuccess" action="{!c.showMessageSuccess}" description="Open Toast SUCCESS (color=green)">
+        <aura:attribute name="message" type="String" required="true" description="Message"/>
+    </aura:method>
+    
+    <aura:method access="global" name="showMessageError" action="{!c.showMessageError}" description="Open Toast INFORMATION (color=red)">
+        <aura:attribute name="message" type="String" required="true" description="Message"/>
+    </aura:method>
+    
+    <aura:method access="global" name="startLoading" action="{!c.startLoading}" description="Open spinner">
+    </aura:method>
+    
+    <aura:method access="global" name="endLoading" action="{!c.endLoading}" description="Close spinner">
+    </aura:method>   
+    
+ 	<aura:method access="global" name="callServer" action="{!c.callServer}" description="Calls a server-side action">
+        <aura:attribute name="component" type="Aura.Component" required="true" description="Component"/>
+        <aura:attribute name="methodName" type="String" required="true" description="Method's name"/>
+        <aura:attribute name="params" type="String" required="true" description="Method's param's"/>
+        <aura:attribute name="successCallback" type="Function" description="..."/>
+        <aura:attribute name="errorCallback" type="Function" description="..."/>
+        <aura:attribute name="showLoading" type="Boolean" description="..." default="true"/>
+    </aura:method>
+    
+    <aura:method access="global" name="confirm" action="{!c.confirm}" description="Show modal to confirm">
+        <aura:attribute name="message" type="String" required="true" description="Message"/>
+        <aura:attribute name="successCallback" type="Function" required="false" description="Success callback"/>
+    </aura:method>
+    
+    <aura:method access="global" name="navigateToObject" action="{!c.navigateToObject}" description="Redirect to ObjectId">
+        <aura:attribute name="objectId" type="Id" required="true" description="Object Id"/>
+    </aura:method>    
+
+    <aura:method access="global" name="uppercaseFirstChar" action="{!c.uppercaseFirstChar}" description="Return text with first letter in uppercase">
+        <aura:attribute name="input" type="String" required="true" description="Input text"/>
+    </aura:method>        
+    
+    
+    
+    <aura:attribute name="showSpinner" type="Boolean" default="false"/>
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner variant="brand" size="large" aura:id="wizardPopupSpinner" class="slds-is-fixed" style="z-index:99999;"/>
+    </aura:if>
+    
+    {!v.body}
+    
+</aura:component>

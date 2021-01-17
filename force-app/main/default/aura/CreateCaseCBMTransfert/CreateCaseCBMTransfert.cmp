@@ -1,0 +1,95 @@
+<aura:component controller="LTNG01_CreateCaseGeneric">
+
+    <!-- Attributes -->
+    <aura:attribute name="recordTypeDeveloperName" type="String"/>
+    <aura:attribute name="recordForm" type="Map"/>
+    <aura:attribute name="currentZoneRecommandation" type="String"/>
+    <aura:attribute name="currentLabelCase" type="String"/>
+    <aura:attribute name="modalCancel" type="String" default="Annuler"/>
+    <aura:attribute name="modalConfirm" type="String" default="Confirmer"/>
+    <aura:attribute name="modalTitle" type="String" default="{!v.currentLabelCase}"/>
+    <aura:attribute name="modalSizeLarge" type="Boolean" default="true"/>
+    <aura:attribute name="errorMessage" type="String" default=""/>
+
+    <!-- Event -->
+    <aura:registerEvent name="createCase" type="c:EVT_CreateCase"/>
+    <!-- Library -->
+    <c:FunctionUtils aura:id="FunctionUtils"/>
+    <!-- Notification -->
+    <lightning:notificationsLibrary aura:id="notifLib"/>
+    <!-- Spinner -->
+    <aura:attribute name="showSpinner" type="Boolean" default="false"/>
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner variant="brand" size="large" class="slds-is-fixed" style="z-index:99999;"/>
+    </aura:if>
+
+    <div class="slds-p-left--medium slds-p-right--medium">
+
+
+        <!--Zone Recommandation -->
+        <section aria-describedby="dialog-body-id-2" aria-label="Dialog Title"
+                 class="slds-popover slds-popover_walkthrough slds-popover_feature slds-nubbin_left slds-popover_full-width"
+                 role="dialog">
+            <div class="slds-popover__body" id="dialog-body-id-2">
+                <div class="slds-media">
+                    <div class="slds-media__body">
+                        <p class="slds-text-heading_small">
+                            <aura:unescapedHtml value="{!v.currentZoneRecommandation}"></aura:unescapedHtml>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!--Error Message-->
+        <div class="{!v.errorMessage == '' ? 'slds-hide' : 'slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_error'}" role="alert">
+            <span class="slds-assistive-text">Erreur</span>
+            <h2><aura:unescapedHtml value="{!v.errorMessage}"></aura:unescapedHtml></h2>
+        </div>
+
+
+        <!--Body-->
+        <div class="slds-grid slds-gutters slds-m-top--small">
+            <div class="slds-col">
+                <lightning:select name="transfert" label="Transfert"
+                                  value="{!v.recordForm.transfert.value}" required="true">
+                    <aura:iteration items="{!v.recordForm.transfert.picklistValues}" var="item">
+                        <option value="{!item.value}">{!item.label}</option>
+                    </aura:iteration>
+                </lightning:select>
+            </div>
+            <div class="slds-col">
+                <ui:inputDate value="{!v.recordForm.accordDemandeDelegBanque }"
+                              displayDatePicker="true"
+                              format="dd/MM/yyyy"
+                              label="Accord demandé à la déleg/banque" required="true"/>
+            </div>
+        </div>
+
+        <div class="slds-grid slds-gutters slds-m-top--small slds-m-bottom--medium">
+            <div class="slds-col">
+                <ui:inputDate value="{!v.recordForm.accordDemandeDEC }"
+                              displayDatePicker="true"
+                              format="dd/MM/yyyy"
+                              label="Accord demandé à la DEC" required="true"/>
+            </div>
+
+            <div class="slds-col">
+                <ui:inputDate value="{!v.recordForm.accordDemandeBPICoBailleur }"
+                              displayDatePicker="true"
+                              format="dd/MM/yyyy"
+                              label="Accord demandé à BPI/co-bailleurs" required="true"/>
+            </div>
+        </div>
+        
+        <div class="slds-col slds-p-horizontal_small slds-size_1-of-1 slds-form slds-form_stacked slds-m-top--small">
+            <lightning:textarea name="commentaire" label="Commentaire" value="{!v.recordForm.commentaire}"/>
+        </div>
+    </div>
+    <footer class="slds-modal__footer" style="padding: 0.50rem 1rem;">
+        <lightning:button label="Annuler" onclick="{!c.onClose}"/>
+        <lightning:button label="Confirmer" onclick="{!c.onConfirm}" variant="brand"/>
+    </footer>
+
+</aura:component>

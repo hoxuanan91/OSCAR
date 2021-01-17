@@ -1,0 +1,20 @@
+<apex:component access="global" controller="EmailKOBodyController">
+    <apex:attribute name="opportunityId"  description="" assignTo="{!oppId}"
+                    type="String"/>
+    <apex:attribute name="email" description=""  assignTo="{!emailMode}"
+                    type="String"/> 
+
+    <apex:panelGrid columns="1">
+    <apex:outputText value="{!' * Conditions particulières du contrat CBM  :  ' + TypeDocument2}" rendered="{!IF(TypeDocument2 == '' || email != 'KO1' , false , true)}"/>
+    <apex:outputText value="{!' * Conditions générales du contrat CBM  :  ' + TypeDocument3 }" rendered="{!IF(TypeDocument3 == '' || email != 'KO1', false , true)}"/>
+    <apex:outputText value="{!' * Mandat SEPA  :  ' + TypeDocument4}" rendered="{!IF(TypeDocument4 == '' || email != 'KO1' , false , true)}"/>
+    <apex:outputText value="{!' * Conditions particulières du contrat CBM    ' + TypeDocument5}" rendered="{!IF(TypeDocument5 == '' || email != 'KO1' , false , true)}"/>
+    <apex:outputText value="{!' * RIB  : ' + TypeDocument6}" rendered="{!IF(TypeDocument6 == '' || email != 'KO1' , false , true)}"/>
+    
+   
+    <apex:outputText value="{!' ** Facture Fournisseur CBM  : ' + TypeDocument8}" rendered="{!IF(TypeDocument8 == '' || email != 'KO2' , false , true)}"/>
+    <apex:outputText value="{!' ** PV de livraison  : ' + TypeDocument9 }" rendered="{!IF(TypeDocument9 == '' || email != 'KO2' , false , true)}"/>
+    <apex:outputText value="{!' ** Certificat Provisoire Immatriculation  : ' + TypeDocument10 }" rendered="{!IF(TypeDocument10 == '' || email != 'KO2' , false , true)}"/>
+    <apex:outputText value="{!' ** Carte Grise  : ' + TypeDocument11 }" rendered="{!IF(TypeDocument11 == '' || email != 'KO2' , false , true)}"/>
+   </apex:panelGrid>
+</apex:component>

@@ -1,0 +1,273 @@
+<aura:component controller="LTNG01_CreateCaseGeneric">
+
+    <!-- Attributes -->
+    <aura:attribute name="recordTypeDeveloperName" type="String" />
+    <aura:attribute name="recordForm" type="Map" />
+    <aura:attribute name="currentZoneRecommandation" type="String" />
+    <aura:attribute name="currentLabelCase" type="String" />
+    <aura:attribute name="modalCancel" type="String" default="Annuler" />
+    <aura:attribute name="modalConfirm" type="String" default="Confirmer" />
+    <aura:attribute name="modalTitle" type="String" default="{!v.currentLabelCase}" />
+    <aura:attribute name="modalSizeLarge" type="Boolean" default="true" />
+    <aura:attribute name="confirmMessage" type="Boolean" default="false" />
+
+    <!-- Event -->
+    <aura:registerEvent name="createCase" type="c:EVT_CreateCase" />
+    <!-- Library -->
+    <c:FunctionUtils aura:id="FunctionUtils" />
+    <!-- Notification -->
+    <lightning:notificationsLibrary aura:id="notifLib" />
+    <!-- Spinner -->
+    <aura:attribute name="showSpinner" type="Boolean" default="false" />
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner variant="brand" size="large" class="slds-is-fixed" style="z-index:99999;"
+        />
+    </aura:if>
+
+    <aura:if isTrue="{!v.confirmMessage}">
+        <div class="slds-p-left--medium slds-p-right--medium">
+
+            <section aria-describedby="dialog-body-id-2" aria-label="Dialog Title" class="slds-popover slds-popover_walkthrough slds-popover_feature slds-nubbin_left slds-popover_full-width"
+                role="dialog">
+                <div class="slds-popover__body" id="dialog-body-id-2">
+                    <div class="slds-media">
+                        <div class="slds-media__body">
+                            <aura:unescapedHtml value="{!v.currentZoneRecommandation}"></aura:unescapedHtml>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <!--
+              INFORMATIONS DOSSIER
+            -->
+
+            <div class="slds-section slds-is-open slds-m-top--medium">
+                <h3 class="slds-section__title slds-theme_shade">
+                    <span class="slds-truncate slds-p-horizontal_small" title="Information du dossier"
+                        style="font-weight:bold;">Informations du dossier</span>
+                </h3>
+                <div aria-hidden="false" class="slds-section__content">
+
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col">
+                            <lightning:input type="text" label="BU" value="{!v.recordForm.bu.label}" disabled="true"></lightning:input>
+                        </div>
+                        <div class="slds-col">
+                            <lightning:input type="text" label="Réseau Apporteur 1" value="{!v.recordForm.reseauApporteur}"
+                                disabled="true"></lightning:input>
+                        </div>
+                    </div>
+
+
+                    <div class="slds-size_7-of-12 slds-p-top--small" style="margin: auto">
+                        <lightning:input type="text" label="Nom du client" value="{!v.recordForm.nomClient}"
+                                disabled="true"></lightning:input>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <!--
+                  INFORMATIONS MATERIEL
+            -->
+            <div class="slds-section slds-is-open slds-m-top--large">
+                <h3 class="slds-section__title slds-theme_shade">
+                    <span class="slds-truncate slds-p-horizontal_small" title="Information matériel"
+                        style="font-weight:bold;">Informations matériel</span>
+                </h3>
+                <div aria-hidden="false" class="slds-section__content">
+
+                    <div class="slds-grid slds-gutters slds-m-top--small">
+                        <div class="slds-col">
+							<lightning:input type="text" label="Type de matériel" value="{!v.recordForm.typeDeMateriel}" disabled="false"></lightning:input>
+                        </div>
+                        <div class="slds-col">
+                            <!--<aura:if isTrue="{!v.recordForm.typeDeMateriel.value == '1'}">-->
+                                <lightning:select name="typeVehicule" label="Type véhicule" value="{!v.recordForm.typeVehicule.value}">
+                                    <option value="">--Aucun--</option>
+                                    <aura:iteration items="{!v.recordForm.typeVehicule.picklistValues}" var="item">
+                                        <option value="{!item.value}">{!item.label}</option>
+                                    </aura:iteration>
+                                </lightning:select>
+                            <!--</aura:if>-->
+                        </div>
+                    </div>
+
+                    <div class="slds-col slds-p-horizontal_small slds-size_1-of-1 slds-form slds-form_stacked slds-m-top--small">
+                        <lightning:input type="text" label="Descriptif du matériel" value="{!v.recordForm.descriptifDuMateriel}"></lightning:input>
+                    </div>
+                    
+                    <div class="slds-m-left_medium slds-m-right_medium" style="padding: 0.5rem; background: #6233b8;">
+                        <div class="slds-text-color_inverse">
+                            <span class="slds-text-title_bold">Pour le VI </span>
+                            préciser carrossage (plateau, benne, ampirole SREM ...).
+                            <span class="slds-text-title_bold"><br />Pour les grues</span>
+                            caractéristiques dont tonnage.
+                            <span class="slds-text-title_bold"><br />Pour machines outils</span>
+                            (nombre d'heures, fonctions ...).
+                        </div>
+                    </div>
+
+                    <div class="slds-col slds-p-horizontal_small slds-size_1-of-1 slds-form slds-form_stacked">
+                        <lightning:textarea name="carrossageEquipementsEtAccessoires" label="Carrossage, équipements et accessoires"
+                            value="{!v.recordForm.equipementsEtAccessoires}" />
+                    </div>
+                    
+                    <div class="slds-grid slds-gutters slds-m-top--small">
+                        <div class="slds-col">
+                            <lightning:input type="text" label="Marque / Fabricant" value="{!v.recordForm.marqueFabricant}"></lightning:input>
+                        </div>
+                        <div class="slds-col">
+                            <label class="slds-form-element__label">Fournisseur</label>
+                            <lightning:helptext content="BdC, Proforma" class="customIcon" />
+                            <lightning:input type="text" name="fournisseur" label="Fournisseur" value="{!v.recordForm.fournisseur}"
+                                variant="label-hidden" />
+                        </div>
+
+                    </div>
+                    
+                    <div class="slds-grid slds-gutters slds-m-top--small">
+                        <div class="slds-col">
+                            <lightning:select name="occasionNeuf" label="Occasion/Neuf" value="{!v.recordForm.occasionNeuf.value}">
+                                <aura:iteration items="{!v.recordForm.occasionNeuf.picklistValues}" var="item">
+                                    <option value="{!item.value}">{!item.label}</option>
+                                </aura:iteration>
+                            </lightning:select>
+                        </div>
+                        <div class="slds-col">
+                            <label class="slds-form-element__label">1ere mise en circulation ou date de fabrication</label>
+                            <lightning:helptext content="JJ/MM/AA ou MM/AA ou AAAA" class="customIcon" />
+                            <lightning:input type="text" name="miseEnCirculation" label="1ere mise en circulation ou date de fabrication"
+                                value="{!v.recordForm.premiereMiseEnCirculation}" variant="label-hidden"
+                            />
+                        </div>
+                    </div>
+                    
+                    <div class="slds-grid slds-gutters slds-m-top--small">
+                        <div class="slds-col">
+                            <label class="slds-form-element__label">N° d'immatriculation</label>
+                            <lightning:helptext content="Que pour VP ou VUL" class="customIcon" />
+                            <lightning:input type="text" name="immatriculation" label="N° d'immatriculation"
+                                value="{!v.recordForm.immatriculation}" variant="label-hidden"
+                            />
+                        </div>
+                        <div class="slds-col">
+                            <label class="slds-form-element__label">Kilométrage ou nombre d'heures</label>
+                            <lightning:helptext content="Précision sur état du matériel et garantie" class="customIcon"/>
+                            <lightning:textarea name="kilometrageOuNombreDheure" value="{!v.recordForm.kilometrageOuNbHeures}" style="display:initial"/>
+                        </div>
+                    </div>
+                    
+                    
+            <!--
+                  INFORMATIONS FINANCIERES
+            -->
+            <div class="slds-section slds-is-open slds-m-top--large">
+                <h3 class="slds-section__title slds-theme_shade">
+                    <span class="slds-truncate slds-p-horizontal_small" title="Informations financières"
+                        style="font-weight:bold;">Informations financières</span>
+                </h3>
+                <div aria-hidden="false" class="slds-section__content">
+                </div>
+                
+                <div class="slds-grid slds-gutters slds-m-top--small">
+                		<div class="slds-col">
+                            <lightning:input aura:id="prixHT" type="number" label="Prix HT" value="{!v.recordForm.prixHT}" step="0.01"
+                                             min="0" messageWhenRangeUnderflow="Le nombre doit être supérieur ou égal à 0."></lightning:input>
+                        </div>
+                        <div class="slds-col">
+                            <lightning:input aura:id="dureeEnMois" type="number" label="Durée en mois"
+                                             value="{!v.recordForm.dureeEnMois}" min="0" messageWhenRangeUnderflow="Le nombre doit être supérieur ou égal à 0."></lightning:input>
+                        </div>
+                </div>
+                
+                <div class="slds-grid slds-gutters slds-m-top--small">
+                		<div class="slds-col">
+                            <lightning:input aura:id="premierLoyer" type="number" name="premierLoyer" step="0.01"
+                                             label="1er Loyer en %" value="{!v.recordForm.premierLoyer}"/>
+                        </div>
+                        <div class="slds-col">
+                            <div class="slds-col">
+                            	<lightning:input aura:id="vr" type="number" name="vr" step="0.01"
+                                            	 label="VR (%)" value="{!v.recordForm.vr}" min="0" messageWhenRangeUnderflow="Le nombre doit être supérieur ou égal à 0."/>
+                        	</div> 
+                        </div>
+                </div>
+                
+            </div>
+                    
+            <!--
+                  INFORMATIONS COMPLEMENTAIRES
+            -->
+            <div class="slds-section slds-is-open slds-m-top--large">
+                <h3 class="slds-section__title slds-theme_shade">
+                    <span class="slds-truncate slds-p-horizontal_small" title="Informations complémentaires"
+                        style="font-weight:bold;">Informations complémentaires</span>
+                </h3
+                    >
+                <div class="slds-m-top--small">
+                    <lightning:select name="niveauUrgence" label="Niveau d'urgence" value="{!v.recordForm.niveauUrgence.value}">
+                        <aura:iteration items="{!v.recordForm.niveauUrgence.picklistValues}" var="item">
+                            <option value="{!item.value}">{!item.label}</option>
+                        </aura:iteration>
+                    </lightning:select>
+                </div>
+                
+                <div class="slds-col slds-p-horizontal_small slds-size_1-of-1 slds-form slds-form_stacked slds-m-top--small">
+                    <lightning:textarea name="commentaire" label="Commentaire" value="{!v.recordForm.commentaire}"/>
+                </div>
+                    
+            </div>                    
+
+
+                </div>
+            </div>
+        </div>
+
+        <footer class="slds-modal__footer" style="padding: 0.50rem 1rem;">
+            <lightning:button label="Annuler" onclick="{!c.onClose}" />
+            <lightning:button label="Confirmer" onclick="{!c.onConfirm}" variant="brand" />
+        </footer>
+
+        <aura:set attribute="else">
+            <div style="height: 640px;">
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                    aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">                 
+                    <div class="slds-modal__container">
+                        <header class="slds-modal__header">
+                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">CBM - Valorisation</h2>
+                        </header>
+                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                            <section aria-describedby="dialog-body-id-2" aria-label="Dialog Title" class="slds-popover slds-popover_walkthrough slds-popover_feature slds-nubbin_left slds-popover_full-width"
+                                     role="dialog">
+                                <div class="slds-popover__body" id="dialog-body-id-2">
+                                    <div class="slds-media">
+                                        <div class="slds-media__body">
+                                            <aura:unescapedHtml value="{!v.recordForm.valorisationPopup}"></aura:unescapedHtml>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                        <footer class="slds-modal__footer">
+                            <lightning:button label="Annuler" onclick="{!c.onClose}" />
+                            <lightning:button label="Confirmer" onclick="{!c.onConfirmMessage}" />
+                        </footer>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </div>
+            <footer class="slds-modal__footer" style="padding: 0.50rem 1rem;">
+                <lightning:button label="Annuler" onclick="{!c.onClose}" />
+                <lightning:button label="Confirmer" onclick="{!c.onConfirmMessage}" variant="brand" />
+            </footer>
+        </aura:set>
+    </aura:if>
+
+</aura:component>

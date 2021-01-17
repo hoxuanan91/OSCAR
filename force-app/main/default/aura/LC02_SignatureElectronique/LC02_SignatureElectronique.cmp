@@ -1,0 +1,114 @@
+<aura:component implements="force:lightningQuickActionWithoutHeader,flexipage:availableForAllPageTypes,force:hasRecordId" access="global" controller="LTNG03_SignatureElectronique">
+   
+   <!-- Attributes -->
+   <aura:attribute name="recordId" type="String" />
+   <aura:attribute name="oppWrapper" type="Map" />
+   <aura:attribute name="selectedValueSignataire" type="String" default="aucun" />
+   <aura:attribute name="isOpen" type="Boolean" default="false" />
+   <aura:attribute name="checkAlreadyExist" type="Boolean" default="false" />
+   <aura:attribute name="isSignataireFilled" type="Boolean" default="false" />
+   <aura:attribute name="isLoading" type="Boolean" default="false" />
+   <aura:attribute name="isDisabled" type="Boolean" default="false" />
+   <aura:attribute name="recordLoadError" type="Object" description="Will be set to the localized error message if the record can't be provided." />
+
+
+   <!-- Handlers -->
+   <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+   <aura:if isTrue="{!v.isLoading}">
+         <lightning:spinner alternativeText="Loading" size="medium" />
+   </aura:if>
+      
+   <lightning:button variant="neutral" label="Lancer la signature électronique" onclick="{!c.openModal}" disabled="{!v.oppWrapper.buttonDisabled}" />
+   <aura:if isTrue="{!v.oppWrapper.buttonDisabled}">
+      <lightning:helptext class="help_text" content="Vérifiez qu'il y ait bien un fournisseur, que le montant du PAS est inférieur à 150000 €, que l'étape est égale à  : G_422 ou AT_LIV ou G_423, que l'état du document du PAS est égal à : 4900 - SE - Contrat à e-Signer ou SE - PV Liv. expiré ou 4910 - SE - Contrat e-Signé ou 4920 - SE - Contrat à Signer Man ou qu'il soit vide."/>
+   </aura:if>
+
+   <aura:if isTrue="{!v.isOpen}">
+      <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+         <div class="slds-modal__container" isTrue="{!!v.isSignataireFilled}" aura:id="stepOne">
+            <header class="slds-modal__header">
+               <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Informations Signataire</h2>
+            </header>
+            <div class="slds-modal__content slds-var-p-around_medium" id="modal-content-id-1">
+               <div class="slds-grid slds-wrap">
+                  <div class="slds-var-p-bottom_x-small slds-size_1-of-2  slds-var-p-left_x-small">
+                     <lightning:select label="Signataires"
+                                       aura:id="signataires"
+                                       value="{!v.selectedValueSignataire}"
+                                       name="signataires"
+                                       onchange="{!c.fillSignerFields}">
+                        <aura:iteration items="{!v.oppWrapper.picklistSignataires}" 
+                                       var="sign">
+                           <option     text="{!sign.label}" 
+                                       value="{!sign.value}" />
+                        </aura:iteration>
+                     </lightning:select>
+                  </div>
+                  <div class="slds-var-p-bottom_x-small slds-size_1-of-2  slds-var-p-left_x-small">
+                     <lightning:select label="Type de document"
+                                       aura:id="typeDoc"
+                                       value="{!v.oppWrapper.signataire.typeDocument}"
+                                       name="typesDoc">
+                        <aura:iteration items="{!v.oppWrapper.picklistTypesDoc}" 
+                                       var="type">
+                           <option     text="{!type.label}" 
+                                       value="{!type.value}" />
+                        </aura:iteration>
+                     </lightning:select>
+                  </div>
+                  <div class="slds-var-p-bottom_x-small slds-size_1-of-2  slds-var-p-left_x-small">
+                     <lightning:input name="prenom" label="Prénom" value="{!v.oppWrapper.signataire.firstName}" required="true" />
+                     <lightning:input name="nom" label="Nom" value="{!v.oppWrapper.signataire.lastName}" required="true" />
+                  </div>
+                  <div class="slds-var-p-bottom_x-small slds-size_1-of-2  slds-var-p-left_x-small">
+                     <lightning:input name="email" label="Email" type="email" value="{!v.oppWrapper.signataire.email}" required="true" />
+                     <lightning:input name="telephone" label="Téléphone" value="{!v.oppWrapper.signataire.phoneNumber}" required="true" />
+                  </div>
+               </div>
+            </div>
+            <footer class="slds-modal__footer slds-modal__footer_directional">
+               <lightning:button variant="neutral" label="Annuler" title="cancel" onclick="{!c.closeModal}"/>
+               <lightning:button variant="brand" label="Continuer" title="continue" onclick="{!c.goNext}" />
+            </footer>
+         </div>
+
+         <div class="slds-modal__container" isTrue="{!v.isSignataireFilled}" aura:id="stepTwo">
+            <header class="slds-modal__header">
+               <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Informations Signataire</h2>
+            </header>
+            <div class="slds-modal__content slds-var-p-around_medium" id="modal-content-id-1">
+               <p>
+                  <center>
+                     <aura:unescapedHtml value="{!$Label.c.CL10_WarningLancementSE}" />
+                  </center>
+               </p>
+            </div>
+            <footer class="slds-modal__footer slds-modal__footer_directional">
+               <lightning:button variant="neutral" label="Annuler" title="cancel" onclick="{!c.closeModal}"/>
+               <lightning:button variant="brand" label="Continuer" title="continue" onclick="{!c.checkAlreadyExist}" disabled="{!v.isDisabled}" />
+            </footer>
+         </div>
+
+         <div class="slds-modal__container" isTrue="{!v.checkAlreadyExist}">
+            <header class="slds-modal__header">
+               <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Signataire déjà existant</h2>
+            </header>
+            <div class="slds-modal__content slds-var-p-around_medium" id="modal-content-id-1">
+               <p>
+                  <center>
+                     Un signataire ayant la même adresse email existe déjà pour ce projet associé. Souhaitez-vous mettre à jour les données existante ou créer un nouveau signataire ?
+                  </center>
+               </p>
+            </div>
+            <footer class="slds-modal__footer slds-modal__footer_directional">
+               <lightning:button variant="neutral" label="Mettre à jour" title="update" onclick="{!c.updateSigner}"/>
+               <lightning:button variant="brand" label="Créer" title="create" onclick="{!c.createSigner}" />
+            </footer>
+         </div>
+      </section>
+      <div class="slds-backdrop slds-backdrop_open"></div>
+   </aura:if>
+     
+
+</aura:component>

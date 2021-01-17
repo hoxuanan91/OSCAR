@@ -1,0 +1,208 @@
+<apex:page standardController="PhaseDeBien__c" extensions="Ctrl03_PhaseBienNatureSurface" tabStyle="PhaseDeBien__c" docType="html-5.0">
+    <apex:stylesheet value="{!$Resource.CSSVFP03PhaseBienNatureSurface}" />
+
+             <apex:form >      
+                    <apex:pageBlock mode="edit">
+                        <apex:pageBlockButtons >
+                            <apex:commandButton action="{!Save}" value="Enregistrer"/>
+                        </apex:pageBlockButtons>
+
+                        <table class="Ventilation_Table">
+                            <thead>
+                                <tr>
+                                    <th style="width:28%"></th>
+                                    <th style="width:24%" class="border_left_bold natixis_background_color" colspan = "2">{!phaseDeBien.Colonne1__c}</th>
+                                    <th style="width:24%" class="border_left_bold natixis_background_color" colspan = "2">{!phaseDeBien.Colonne2__c}</th>
+                                    <th style="width:24%" class="border_left_bold natixis_background_color" colspan = "2">Total</th>                          
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="border_right_bold_inner" style="background-color:#DDD">Terrain</td>
+                                    <td class="border_left_bold" colspan = "2"><apex:outputfield styleClass="natixis_outputfield" value="{!phaseDeBien.NS0SurfaceExistants__c}" /> m²</td>
+                                    <td class="border_left_bold" colspan = "2"><apex:inputField styleClass="natixis_inputfield" value="{!phaseDeBien.NS0SurfaceConsAvnt__c}" /> m²</td>
+                                    <td class="border_left_bold" colspan = "2"><apex:outputfield styleClass="natixis_outputfield" value="{!phaseDeBien.TotalNS0__c}" /> m²</td>
+                                </tr>
+                                <tr style="height:20px;background-color:white;">
+                                    <td colspan = "1"></td>
+                                    <td colspan = "2"></td>
+                                    <td colspan = "2"></td>
+                                    <td colspan = "2"></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td class="border_left_bold_inner"><apex:outputText styleClass="natixis_outputfield" value="{!phaseDeBien.TypeDeSurface1__c}"/></td>
+                                    <td class="border_right_bold_inner">SdV</td>           
+                                    <td class="border_left_bold_inner"><apex:outputText styleClass="natixis_outputfield" value="{!phaseDeBien.TypeDeSurface1__c}"/></td>
+                                    <td>SdV</td>
+                                    <td class="border_left_bold_inner"><apex:outputText styleClass="natixis_outputfield" value="{!phaseDeBien.TypeDeSurface1__c}"/></td>
+                                    <td>SdV</td>
+                                </tr>
+                                <tr>
+                                    <td class="border_right_bold_inner"><apex:outputText styleClass="natixis_input_first_column" value="{!phaseDeBien.NatureSurface1__c}"/></td>
+                                    <td class="border_left_bold_inner"><apex:outputField styleClass="natixis_outputField" value="{!phaseDeBien.NS1SurfaceExistants__c}" /> m²</td>
+                                    <td><apex:outputField styleClass="natixis_outputField" value="{!phaseDeBien.NS1SdVExistants__c}" /> m²</td>
+                                    <td class="border_left_bold_inner"><apex:inputField styleClass="natixis_inputfield" value="{!phaseDeBien.NS1SurfaceConsAvnt__c}" /> m²</td>
+                                    <td><apex:inputField styleClass="natixis_inputfield" value="{!phaseDeBien.NS1SdVConsAvnt__c}"/> m²</td>
+                                    <td class="border_left_bold_inner"><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalNS1__c}" /> m²</td>
+                                    <td><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalSdVNS1__c}"/> m²</td>
+                                </tr>
+                                <tr>
+                                    <td class="border_right_bold_inner"><apex:outputText styleClass="natixis_input_first_column" value="{!phaseDeBien.NatureSurface2__c}"/></td>
+                                    <td class="border_left_bold_inner"><apex:outputField styleClass="natixis_outputField" value="{!phaseDeBien.NS2SurfaceExistants__c}" /> m²</td>
+                                    <td><apex:outputField styleClass="natixis_outputField" value="{!phaseDeBien.NS2SdVExistants__c}" /> m²</td>
+                                    <td class="border_left_bold_inner"><apex:inputField styleClass="natixis_inputfield" value="{!phaseDeBien.NS2SurfaceConsAvnt__c}" /> m²</td>
+                                    <td><apex:inputField styleClass="natixis_inputfield" value="{!phaseDeBien.NS2SdVConsAvnt__c}"/> m²</td>
+                                    <td class="border_left_bold_inner"><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalNS2__c}" /> m²</td>
+                                    <td><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalSdVNS2__c}"/> m²</td>
+                                </tr>
+                                <tr>
+                                    <td class="border_right_bold_inner"><apex:outputText styleClass="natixis_input_first_column"  value="{!phaseDeBien.NatureSurface3__c}"/></td>
+                                    <td class="border_left_bold_inner"><apex:outputField styleClass="natixis_outputField" value="{!phaseDeBien.NS3SurfaceExistants__c}" /> m²</td>
+                                    <td><apex:outputField styleClass="natixis_outputField" value="{!phaseDeBien.NS3SdVExistants__c}" /> m²</td>
+                                    <td class="border_left_bold_inner"><apex:inputField styleClass="natixis_inputfield" value="{!phaseDeBien.NS3SurfaceConsAvnt__c}" /> m²</td>
+                                    <td><apex:inputField styleClass="natixis_inputfield" value="{!phaseDeBien.NS3SdVConsAvnt__c}"/> m²</td>
+                                    <td class="border_left_bold_inner"><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalNS3__c}" /> m²</td>
+                                    <td><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalSdVNS3__c}"/> m²</td>
+                                </tr>
+                                <tr>
+                                    <td class="border_right_bold_inner"><apex:outputText styleClass="natixis_input_first_column" value="{!phaseDeBien.NatureSurface4__c}"/></td>
+                                    <td class="border_left_bold_inner"><apex:outputField styleClass="natixis_outputField" value="{!phaseDeBien.NS4SurfaceExistants__c}" /> m²</td>
+                                    <td><apex:outputField styleClass="natixis_outputField" value="{!phaseDeBien.NS4SdVExistants__c}" /> m²</td>
+                                    <td class="border_left_bold_inner"><apex:inputField styleClass="natixis_inputfield" value="{!phaseDeBien.NS4SurfaceConsAvnt__c}" /> m²</td>
+                                    <td><apex:inputField styleClass="natixis_inputfield"  value="{!phaseDeBien.NS4SdVConsAvnt__c}"/> m²</td>
+                                    <td class="border_left_bold_inner"><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalNS4__c}" /> m²</td>
+                                    <td><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalSdVNS4__c}"/> m²</td>
+                                </tr>
+                                <tr>
+                                    <td class="border_right_bold_inner"><apex:outputText styleClass="natixis_input_first_column" value="{!phaseDeBien.NatureSurface5__c}"/></td>
+                                    <td class="border_left_bold_inner"><apex:outputField styleClass="natixis_outputField"  value="{!phaseDeBien.NS5SurfaceExistants__c}" /> m²</td>
+                                    <td><apex:outputField styleClass="natixis_outputField"  value="{!phaseDeBien.NS5SdVExistants__c}" /> m²</td>
+                                    <td class="border_left_bold_inner"><apex:inputField styleClass="natixis_inputfield"  value="{!phaseDeBien.NS5SurfaceConsAvnt__c}" /> m²</td>
+                                    <td><apex:inputField styleClass="natixis_inputfield"  value="{!phaseDeBien.NS5SdVConsAvnt__c}"/> m²</td>
+                                    <td class="border_left_bold_inner"><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalNS5__c}" /> m²</td>
+                                    <td><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalSdVNS5__c}"/> m²</td>
+                                </tr>
+                                <tr>
+                                    <td class="border_right_bold_inner"><apex:outputText styleClass="natixis_input_first_column" value="{!phaseDeBien.NatureSurface6__c}"/></td>
+                                    <td class="border_left_bold_inner"><apex:outputField styleClass="natixis_outputField"  value="{!phaseDeBien.NS6SurfaceExistants__c}" /> m²</td>
+                                    <td><apex:outputField styleClass="natixis_outputField"  value="{!phaseDeBien.NS6SdVExistants__c}" /> m²</td>
+                                    <td class="border_left_bold_inner"><apex:inputField styleClass="natixis_inputfield"  value="{!phaseDeBien.NS6SurfaceConsAvnt__c}" /> m²</td>
+                                    <td><apex:inputField styleClass="natixis_inputfield"  value="{!phaseDeBien.NS6SdVConsAvnt__c}"/> m²</td>
+                                    <td class="border_left_bold_inner"><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalNS6__c}" /> m²</td>
+                                    <td><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalSdVNS6__c}"/> m²</td>
+                                </tr>
+                                <tr>
+                                    <td class="border_right_bold_inner"><apex:outputText styleClass="natixis_input_first_column" value="{!phaseDeBien.NatureSurface7__c}"/></td>
+                                    <td class="border_left_bold_inner"><apex:outputField styleClass="natixis_outputField"  value="{!phaseDeBien.NS7SurfaceExistants__c}" /> m²</td>
+                                    <td><apex:outputField styleClass="natixis_outputField"  value="{!phaseDeBien.NS7SdVExistants__c}" /> m²</td>
+                                    <td class="border_left_bold_inner"><apex:inputField styleClass="natixis_inputfield"  value="{!phaseDeBien.NS7SurfaceConsAvnt__c}" /> m²</td>
+                                    <td><apex:inputField styleClass="natixis_inputfield"  value="{!phaseDeBien.NS7SdVConsAvnt__c}"/> m²</td>
+                                    <td class="border_left_bold_inner"><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalNS7__c}" /> m²</td>
+                                    <td><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalSdVNS7__c}"/> m²</td>
+                                </tr>
+                                <tr>
+                                    <td class="border_right_bold_inner"><apex:outputText styleClass="natixis_input_first_column" value="{!phaseDeBien.NatureSurface8__c}"/></td>
+                                    <td class="border_left_bold_inner"><apex:outputField styleClass="natixis_outputField"  value="{!phaseDeBien.NS8SurfaceExistants__c}" /> m²</td>
+                                    <td><apex:outputField styleClass="natixis_outputField"  value="{!phaseDeBien.NS8SdVExistants__c}" /> m²</td>
+                                    <td class="border_left_bold_inner"><apex:inputField styleClass="natixis_inputfield"  value="{!phaseDeBien.NS8SurfaceConsAvnt__c}" /> m²</td>
+                                    <td><apex:inputField styleClass="natixis_inputfield"  value="{!phaseDeBien.NS8SdVConsAvnt__c}"/> m²</td>
+                                    <td class="border_left_bold_inner"><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalNS8__c}" /> m²</td>
+                                    <td><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalSdVNS8__c}"/> m²</td>
+                                </tr>
+                                <tr>
+                                    <td class="border_right_bold_inner"><apex:outputText styleClass="natixis_input_first_column" value="{!phaseDeBien.NatureSurface9__c}"/></td>
+                                    <td class="border_left_bold_inner"><apex:outputField styleClass="natixis_outputField"  value="{!phaseDeBien.NS9SurfaceExistants__c}" /> m²</td>
+                                    <td><apex:outputField styleClass="natixis_outputField"  value="{!phaseDeBien.NS9SdVExistants__c}" /> m²</td>
+                                    <td class="border_left_bold_inner"><apex:inputField styleClass="natixis_inputfield"  value="{!phaseDeBien.NS9SurfaceConsAvnt__c}" /> m²</td>
+                                    <td><apex:inputField styleClass="natixis_inputfield"  value="{!phaseDeBien.NS9SdVConsAvnt__c}"/> m²</td>
+                                    <td class="border_left_bold_inner"><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalNS9__c}" /> m²</td>
+                                    <td><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalSdVNS9__c}"/> m²</td>
+                                </tr>
+                                <tr>
+                                    <td class="border_right_bold_inner"><apex:outputText styleClass="natixis_input_first_column" value="{!phaseDeBien.NatureSurface10__c}"/></td>
+                                    <td class="border_left_bold_inner"><apex:outputField styleClass="natixis_outputField"  value="{!phaseDeBien.NS10SurfaceExistants__c}" /> m²</td>
+                                    <td><apex:outputField styleClass="natixis_outputField"  value="{!phaseDeBien.NS10SdVExistants__c}" /> m²</td>
+                                    <td class="border_left_bold_inner"><apex:inputField styleClass="natixis_inputfield"  value="{!phaseDeBien.NS10SurfaceConsAvnt__c}" /> m²</td>
+                                    <td><apex:inputField styleClass="natixis_inputfield"  value="{!phaseDeBien.NS10SdVConsAvnt__c}"/> m²</td>
+                                    <td class="border_left_bold_inner"><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalNS10__c}" /> m²</td>
+                                    <td><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalSdVNS10__c}"/> m²</td>
+                                </tr>
+                                <tr>
+                                    <td class="border_right_bold_inner"><apex:outputText styleClass="natixis_input_first_column" value="{!phaseDeBien.NatureSurface11__c}"/></td>
+                                    <td class="border_left_bold_inner"><apex:outputField styleClass="natixis_outputField"  value="{!phaseDeBien.NS11SurfaceExistants__c}" /> m²</td>
+                                    <td><apex:outputField styleClass="natixis_outputField"  value="{!phaseDeBien.NS11SdVExistants__c}" /> m²</td>
+                                    <td class="border_left_bold_inner"><apex:inputField styleClass="natixis_inputfield"  value="{!phaseDeBien.NS11SurfaceConsAvnt__c}" /> m²</td>
+                                    <td><apex:inputField styleClass="natixis_inputfield"  value="{!phaseDeBien.NS11SdVConsAvnt__c}"/> m²</td>
+                                    <td class="border_left_bold_inner"><apex:outputField styleClass="natixis_outputField" value="{!phaseDeBien.TotalNS11__c}" /> m²</td>
+                                    <td><apex:outputField styleClass="natixis_outputField" value="{!phaseDeBien.TotalSdVNS11__c}"/> m²</td>
+                                </tr>
+                                <tr>
+                                    <td class="border_right_bold_inner"><apex:outputText styleClass="natixis_input_first_column" value="{!phaseDeBien.NatureSurface12__c}"/></td>
+                                    <td class="border_left_bold_inner"><apex:outputField styleClass="natixis_outputField"  value="{!phaseDeBien.NS12SurfaceExistants__c}" /> m²</td>
+                                    <td><apex:outputField styleClass="natixis_outputField"  value="{!phaseDeBien.NS12SdVExistants__c}" /> m²</td>
+                                    <td class="border_left_bold_inner"><apex:inputField styleClass="natixis_inputfield"  value="{!phaseDeBien.NS12SurfaceConsAvnt__c}" /> m²</td>
+                                    <td><apex:inputField styleClass="natixis_inputfield"  value="{!phaseDeBien.NS12SdVConsAvnt__c}"/> m²</td>
+                                    <td class="border_left_bold_inner"><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalNS12__c}" /> m²</td>
+                                    <td><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalSdVNS12__c}"/> m²</td>
+                                </tr>
+                                <tr>
+                                    <td class="border_right_bold_inner"><apex:outputText styleClass="natixis_input_first_column" value="{!phaseDeBien.NatureSurface13__c}"/></td>
+                                    <td class="border_left_bold_inner"><apex:outputField styleClass="natixis_outputField"  value="{!phaseDeBien.NS13SurfaceExistants__c}" /> m²</td>
+                                    <td><apex:outputField styleClass="natixis_outputField"  value="{!phaseDeBien.NS13SdVExistants__c}" /> m²</td>
+                                    <td class="border_left_bold_inner"><apex:inputField styleClass="natixis_inputfield"  value="{!phaseDeBien.NS13SurfaceConsAvnt__c}" /> m²</td>
+                                    <td><apex:inputField styleClass="natixis_inputfield"  value="{!phaseDeBien.NS13SdVConsAvnt__c}"/> m²</td>
+                                    <td class="border_left_bold_inner"><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalNS13__c}" /> m²</td>
+                                    <td><apex:outputField styleClass="natixis_outputField" value="{!phaseDeBien.TotalSdVNS13__c}"/> m²</td>
+                                </tr>                                
+                                
+                                <tr>
+                                    <td class="border_right_bold_inner"><apex:outputText styleClass="natixis_input_first_column" value="{!phaseDeBien.NatureSurface14__c}"/></td>
+                                    <td class="border_left_bold_inner"><apex:outputField styleClass="natixis_outputField"  value="{!phaseDeBien.NS14SurfaceExistants__c}" /> m²</td>
+                                    <td><apex:outputField styleClass="natixis_outputField"  value="{!phaseDeBien.NS14SdVExistants__c}" /> m²</td>
+                                    <td class="border_left_bold_inner"><apex:inputField styleClass="natixis_inputfield" value="{!phaseDeBien.NS14SurfaceConsAvnt__c}" /> m²</td>
+                                    <td><apex:inputField styleClass="natixis_inputfield"  value="{!phaseDeBien.NS14SdVConsAvnt__c}"/> m²</td>
+                                    <td class="border_left_bold_inner"><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalNS14__c}" /> m²</td>
+                                    <td><apex:outputField styleClass="natixis_outputField" value="{!phaseDeBien.TotalSdVNS14__c}"/> m²</td>
+                                </tr>
+                                <tr>
+                                    <td class="border_right_bold_inner"><apex:outputText styleClass="natixis_input_first_column" value="{!phaseDeBien.NatureSurface15__c}"/></td>
+                                    <td class="border_left_bold_inner"><apex:outputField styleClass="natixis_outputField"  value="{!phaseDeBien.NS15SurfaceExistants__c}" /> m²</td>
+                                    <td><apex:outputField styleClass="natixis_outputField"  value="{!phaseDeBien.NS15SdVExistants__c}" /> m²</td>
+                                    <td class="border_left_bold_inner"><apex:inputField styleClass="natixis_inputfield"  value="{!phaseDeBien.NS15SurfaceConsAvnt__c}" /> m²</td>
+                                    <td><apex:inputField styleClass="natixis_inputfield"  value="{!phaseDeBien.NS15SdVConsAvnt__c}"/> m²</td>
+                                    <td class="border_left_bold_inner"><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalNS15__c}" /> m²</td>
+                                    <td><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalSdVNS15__c}"/> m²</td>
+                                </tr>
+                                <tr>
+                                    <td class="border_right_bold_inner"><apex:outputText style="width:90%" styleClass="natixis_outputfield" value="TOTAL HORS DEMOLITION"></apex:outputText></td>
+                                    <td class="border_left_bold_inner"><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalHDSurfaceExistants__c}" /> m²</td>
+                                    <td><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalHDSdVExistants__c}" /> m²</td>
+                                    <td class="border_left_bold_inner"><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalHDSurfaceConsAvnt__c}" /> m²</td>
+                                    <td><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalHDSdVConsAvnt__c}"/> m²</td>
+                                    <td class="border_left_bold_inner"><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalSurfaceHD__c}" /> m²</td>
+                                    <td><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalSurfaceSdVHD__c}"/> m²</td>
+                                </tr>
+                                <tr>
+                                    <td class="border_right_bold_inner"><apex:outputText style="width:90%" styleClass="natixis_inputfield" value="Surfaces de démolition"></apex:outputText></td>
+                                    <td class="border_left_bold_inner"><apex:outputField styleClass="natixis_inputfield"  value="{!phaseDeBien.SurfaceDemolition__c}" /> m²</td>
+                                    <td><apex:outputField styleClass="natixis_inputfield"  value="{!phaseDeBien.SurfaceSdVDemolition__c}" /> m²</td>
+                                    <td class="border_left_bold_inner"><apex:inputField styleClass="natixis_inputfield"  value="{!phaseDeBien.SurfaceDemolitionCol2__c}" /> m²</td>
+                                    <td><apex:inputField styleClass="natixis_inputfield"  value="{!phaseDeBien.SurfaceSdVDemolitionCol2__c}" /> m²</td>
+                                    <td class="border_left_bold_inner"><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalSurfaceDemolition__c}" /> m²</td>
+                                    <td><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalSurfaceSdVDemolition__c}"/> m²</td>
+                                </tr>
+                                <tr>
+                                    <td class="border_right_bold_inner"><apex:outputText style="width:90%" styleClass="natixis_outputfield" value="TOTAL (DEMOLITION INCLUSE)"></apex:outputText></td>
+                                    <td class="border_left_bold_inner"><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalDISurfaceExistants__c}" /> m²</td>
+                                    <td><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalDISdVExistants__c}" /> m²</td>
+                                    <td class="border_left_bold_inner"><apex:outputfield styleClass="natixis_outputfield" value="{!phaseDeBien.TotalDISurfaceConstruction__c}" /> m²</td>
+                                    <td><apex:outputfield styleClass="natixis_outputfield" value="{!phaseDeBien.TotalDISdVConstruction__c}"/> m²</td>
+                                    <td class="border_left_bold_inner"><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalDISurface__c}" /> m²</td>
+                                    <td><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalDISdV__c}"/> m²</td>
+                                </tr>
+                            </tbody>  
+                        </table>
+                </apex:pageBlock>
+            </apex:form>
+</apex:page>

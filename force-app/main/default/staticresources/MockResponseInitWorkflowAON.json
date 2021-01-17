@@ -1,0 +1,64 @@
+{
+    "callerId": "DHM",
+    "documentsCodes": [
+        "tkcd4"
+    ],
+    "leaseDealId": "132456",
+    "leaseDealNumber": "XXXXXX-XX-X",
+    "insureds": [
+        {
+            "title": "M",
+            "surname": "surname",
+            "maidenName": "maidenName",
+            "firstName": "firstName",
+            "dateOfBirth": "dd/MM/YYYY",
+            "email": "tiers@bpce.fr",
+            "type": "TIERS",
+            "tiersId": "1516403",
+            "professionalCategory": "21",
+            "address": {
+                "street": "4 Place de la coupole",
+                "postalCode": 94220,
+                "city": "Charenton-Le-Pont",
+                "country": "FR"
+            },
+            "function": "Dirigeant",
+            "portion": 100,
+            "contributionRate": 0.51,
+            "insuredAmount": 10000,
+            "period": 60,
+            "outstandingAmount": 350,
+            "insuranceAnnualFee": 12548,
+            "insuranceGuaranteeCode": "ASSDC50TTCAUHT",
+            "onlineAgreement": true,
+            "phoneNumber": "0612345678"
+        },
+        {
+            "title": "M",
+            "surname": "surname",
+            "maidenName": "maidenName",
+            "firstName": "firstName",
+            "dateOfBirth": "dd/MM/YYYY",
+            "email": "principal@bpce.fr",
+            "insuranceAnnualFee": 12548,
+            "type": "PRINCIPAL",
+            "tiersId": "1516402",
+            "professionalCategory": "21",
+            "address": {
+                "street": "4 Place de la coupole",
+                "postalCode": 94220,
+                "city": "Charenton-Le-Pont",
+                "country": "FR"
+            },
+            "function": "Dirigeant",
+            "portion": 100,
+            "contributionRate": 0.51,
+            "insuredAmount": 125584,
+            "period": 60,
+            "outstandingAmount": 6358,
+            "insuranceGuaranteeCode": "ASSDC50TTCAUHT",
+            "onlineAgreement": true,
+            "phoneNumber": "0612345678"
+        }
+    ]
+}

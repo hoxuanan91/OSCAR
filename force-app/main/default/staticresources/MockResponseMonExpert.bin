@@ -1,0 +1,19 @@
+{
+	"characteristics": {
+		"expertInquiryId": 9716 ,
+		"expertInquiryStatus": {
+			"code": 1 ,
+			"label": "Création"
+		},
+		"comment": "Mon commentaire" ,
+		"internalComment": "Mon commentaire Interne" ,
+		"businessExpertName": "Mohamed DJ" ,
+		"businessExpertEmail": "DJ.MOHAMED@bpce.fr" ,
+		"lastUpdate": "2019-10-04 12.14.00" ,
+	},
+	"response": {
+		"interactionId": "1" ,
+		"code": 201 ,
+		"label": "Label"
+	}
+}

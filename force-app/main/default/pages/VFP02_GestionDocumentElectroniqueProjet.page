@@ -1,0 +1,113 @@
+<apex:page docType="html-5.0" standardController="Projet__c" extensions="Ctrl02_GestionDocumentaire" tabStyle="Projet__c"  sidebar="true" showHeader="true" cache="true">  
+  
+     <apex:form id="changePrivacyForm"> 
+      <apex:pageBlock >
+          <apex:outputPanel ><a href="/{!IDDuProjet}">Retour vers le projet {!NomDuProjet}</a></apex:outputPanel> 
+      </apex:pageBlock>
+         
+      <apex:pageBlock title="Liste des documents élèctroniques"> 
+       <apex:pageBlock >
+           <apex:repeat value="{!GlobalListeBien}" var="LePoolbien">
+                <apex:variable var="BienID" value="{!LePoolbien['Biens__r.id']}" /> 
+                <apex:variable var="BienName" value="{!LePoolbien['Biens__r.Name']}" />  
+            	<apex:outputPanel > Bien : <a href="VFP02_GEstionDocumentElectroniqueBien?id={!BienID}">{!BienName}</a></apex:outputPanel> 
+            <br />
+           </apex:repeat>
+       </apex:pageBlock>
+          
+      <apex:pageBlockSection title="Projet : {!NomDuProjet}"  columns="1"  collapsible="true" id="Projet">  
+             
+          <apex:repeat value="{!ListSectionProjet}" var="key">
+            <apex:pageBlock title="{!key}"  > 
+                 <apex:repeat value="{!ListSectionCategorieAssociated[key]}" var="key2"> 
+                      <apex:pageBlockSection title=" {!key2} "  columns="1"  >
+                          <apex:variable var="CategrorieType" value="{!key2}" /> 
+                          <apex:pageBlock >
+                              <table> 
+                                 <tr style="height: 20px; text-align: center;">
+                                        <th style="width: 696px; text-align: left;"><b>Nom du fichier</b></th>  
+                                                                    <th ><b>Document(s) Joint(s)</b></th>  
+                                                                    <th ><b>Répertoire Complet</b></th> 
+                                                                    <th ><b>Client</b></th> 
+                                                                    <th  ><b>Réseau</b></th>
+                                                                    <th ><b>Chef de file</b></th>
+                                                                    
+                                     
+                                </tr>
+                                 
+                                            <apex:repeat value="{!ListDocElecPA}" var="key4">
+                                                       <apex:variable var="Type" value="{!key4['TypeDuDocument__c']}" />  
+                                                       <apex:variable var="Section" value="{!key4['Section__c']}" />    
+                                                       <apex:variable var="Categorie" value="{!key4['Categorie__c']}" />   
+                                                  <apex:outputPanel rendered="{!IF(Categorie == CategrorieType , true , false)}"> 
+                                                  <tr style="height: 25px; text-align: center;" >
+                                                  
+                                                    <td style="width: 696px; text-align: left;">
+                                                      <!--   <apex:outputPanel rendered="{!IF(ISNULL(Link) , false , true)}"><a href='/sfc/#version/{!Link}' target='_blank'>{!Type}</a></apex:outputPanel> -->
+                                                        <apex:outputPanel > 
+                                                           		<apex:commandLink value="{!key4['TypeDuDocument__c']}" action="{!GoToDetails}" styleClass="" style="">
+                                                                         
+                                                                         <apex:param name="Section" value="{!Section}" assignTo="{!SectionParam}"/> 
+                                                                        <apex:param name="Categorie" value="{!CategrorieType}" assignTo="{!CategorieParam}"/>
+                                                                        <apex:param name="Repertoire" value="{!Type}" assignTo="{!RepertoireParam}"/> 
+
+                                                                         <apex:param name="DAID" value="{!key4['id']}" assignTo="{!DAIDParam}" ></apex:param> 
+                                                               			 <apex:param name="TypeDobjet" value="projet" assignTo="{!TypeDobjet}" ></apex:param>
+                                                               	     	<apex:param name="IDObjectToAttach" value="{!IDDuProjet}" assignTo="{!IDObjectToAttach}" ></apex:param>                                                                 
+                                                                </apex:commandLink> 
+                                                        
+                                                        </apex:outputPanel>
+                                                    </td>
+                                                    <td >
+                                                      <!--   <apex:outputPanel rendered="{!IF(ISNULL(Link) , false , true)}"><a href='/sfc/#version/{!Link}' target='_blank'>{!Type}</a></apex:outputPanel> -->
+                                                        <apex:outputPanel > ( {!ListDocMandatoryUploaded[key4['TypeDuDocument__c']]} ) </apex:outputPanel>
+                                                    </td>
+                                                    
+                                     
+                                        <td > 
+                                                 <apex:inputCheckbox style="margin-left: 50%;" value="{!ListDemandeNotaire[key4['TypeDuDocument__c']]}"    disabled="true"  />
+                                        </td>
+                                           
+                                        <td > 
+                                                 <apex:inputCheckbox style="margin-left: 50%;" value="{!ListDemandeClient[key4['TypeDuDocument__c']]}"  disabled="true" />
+                                        </td> 
+                                        <td >  
+                                            <apex:inputCheckbox style="margin-left: 50%;" value="{!ListDemandeDistributeur[key4['TypeDuDocument__c']]}"  disabled="true"  />
+                                        </td> 
+                                        <td > 
+                                                 <apex:inputCheckbox style="margin-left: 50%;" value="{!ListDemandeChefDeFile[key4['TypeDuDocument__c']]}"   disabled="true"  /> 
+                                        </td> 
+									    <td>
+                                                        <apex:outputPanel rendered="{!IF(key4['Categorie__c'] == CategrorieType , true , false)}"> 
+                                                            <apex:commandLink value="Joindre" action="{!GoToUploadVF}" styleClass="btn" style="text-decoration:none">
+                                                                    
+                                                                         <apex:param name="Section" value="{!Section}" assignTo="{!SectionParam}"/> 
+                                                                        <apex:param name="Categorie" value="{!CategrorieType}" assignTo="{!CategorieParam}"/>
+                                                                        <apex:param name="Repertoire" value="{!Type}" assignTo="{!RepertoireParam}"/> 
+
+                                                                         <apex:param name="DAID" value="{!key4['id']}" assignTo="{!DAIDParam}" ></apex:param> 
+                                                               			 <apex:param name="TypeDobjet" value="projet" assignTo="{!TypeDobjet}" ></apex:param>
+                                                               	     	<apex:param name="IDObjectToAttach" value="{!IDDuProjet}" assignTo="{!IDObjectToAttach}" ></apex:param>                                                                 
+                                                            </apex:commandLink> 
+                                                        </apex:outputPanel>                                                   
+                                                    </td>  
+                                                </tr>
+                                                </apex:outputPanel>         
+                                          </apex:repeat> 
+                                 
+                              </table>    
+                          </apex:pageBlock>
+                      </apex:pageBlockSection> 
+                </apex:repeat>  
+            </apex:pageBlock>
+        </apex:repeat>   
+       </apex:pageBlockSection> 
+        
+      
+     
+            
+    </apex:pageBlock>   
+        
+ </apex:form>
+ 
+</apex:page>

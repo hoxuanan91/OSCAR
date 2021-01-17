@@ -1,0 +1,56 @@
+<apex:page standardController="Opportunity" extensions="Ctrl05_DemandeBDE" tabStyle="Opportunity"  sidebar="true" showHeader="true" >
+    <apex:stylesheet value="{!URLFOR($Resource.CSSVFP05DemandeBDE, '')}" /> 
+    <apex:form >
+         <apex:pageBlock >
+          <apex:outputPanel ><a href="/{!IDDuProjetAssocie}">Retour</a></apex:outputPanel> 
+      	</apex:pageBlock>
+            <apex:pageBlock title="Demande Synthèse et/ou  Bilans BDE">
+                <table style="width:100%">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Demande Synthèse</th>
+                            <th>Demande de Synthèse envoyée</th>
+                            <th>Date de Reception de la Synthèse</th> 
+                            <th>Demande Bilan</th>
+                            <th>Demande de Bilan Envoyée</th>
+                            <th>Date de réception du Bilan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><a href="/{!tiersPrincipal.id}" target="_blank"><apex:outputText rendered="{!tiersPrincipal != null}" value="{!tiersPrincipal.Name} (N° Siren : {!tiersPrincipal.N_SIREN__c})" /></a></td>
+                            <td><apex:inputCheckbox disabled="{!DemandeBDEtiersPrincipal.Synthese__c == true||DemandeBDEtiersPrincipal.DemandeSyntheseEnvoyee__c == true}" rendered="{!tiersPrincipal != null}" value="{!tiersSynthese}"/></td>
+                            <td><apex:outputfield rendered="{!tiersPrincipal != null && DemandeBDEtiersPrincipal != null}" value="{!DemandeBDEtiersPrincipal.DateDemandeSynthese__c}"  /></td>
+                            <td><apex:outputfield rendered="{!tiersPrincipal != null && DemandeBDEtiersPrincipal != null}" value="{!DemandeBDEtiersPrincipal.DateReceptionSynthese__c}"  /></td>
+                            
+                            <td><apex:inputCheckbox disabled="{!DemandeBDEtiersPrincipal.Bilan__c == true||DemandeBDEtiersPrincipal.DemandeBilanEnvoyee__c == true}" rendered="{!tiersPrincipal != null}" value="{!tiersBilan}"/></td>
+                            <td><apex:outputfield rendered="{!tiersPrincipal != null && DemandeBDEtiersPrincipal != null}" value="{!DemandeBDEtiersPrincipal.DateDemandeBilan__c}"  /></td>
+                            <td><apex:outputfield rendered="{!tiersPrincipal != null  && DemandeBDEtiersPrincipal != null}" value="{!DemandeBDEtiersPrincipal.DateReceptionBilan__c}"  /></td>
+                        </tr>
+                        <tr>
+                            <td><a href="/{!teteDeGroupe.id}" target="_blank"><apex:outputText rendered="{!teteDeGroupe != null}" value="{!teteDeGroupe.Name} (N° Siren : {!teteDeGroupe.N_SIREN__c})" /></a></td>
+                            <td><apex:inputCheckbox disabled="{!DemandeBDEteteDeGroupe.Synthese__c == true||DemandeBDEteteDeGroupe.DemandeSyntheseEnvoyee__c == true}" rendered="{!teteDeGroupe != null}" value="{!teteSynthese}"/></td>
+                            <td><apex:outputfield rendered="{!teteDeGroupe != null && DemandeBDEteteDeGroupe != null}" value="{!DemandeBDEteteDeGroupe.DateDemandeSynthese__c}"  /></td>
+                             <td><apex:outputfield rendered="{!teteDeGroupe != null && DemandeBDEteteDeGroupe != null}" value="{!DemandeBDEteteDeGroupe.DateReceptionSynthese__c}"  /></td>
+                            <td><apex:inputCheckbox disabled="{!DemandeBDEteteDeGroupe.Bilan__c == true||DemandeBDEteteDeGroupe.DemandeBilanEnvoyee__c == true}" rendered="{!teteDeGroupe != null}" value="{!teteBilan}"/></td>
+                            <td><apex:outputfield rendered="{!teteDeGroupe != null && DemandeBDEteteDeGroupe != null}" value="{!DemandeBDEteteDeGroupe.DateDemandeBilan__c}"  /></td>
+                            <td><apex:outputfield rendered="{!teteDeGroupe != null && DemandeBDEteteDeGroupe != null}" value="{!DemandeBDEteteDeGroupe.DateReceptionBilan__c}"  /></td>
+                        </tr>
+                        <tr>
+                            <td><a href="/{!tiersEnRisqueProfile.id}" target="_blank"><apex:outputText rendered="{!tiersEnRisqueProfile != null}" value="{!tiersEnRisqueProfile.Name} (N° Siren : {!tiersEnRisqueProfile.N_SIREN__c})" /></a></td>
+                            <td><apex:inputCheckbox disabled="{!DemandeBDEtiersEnRisqueProfile.Synthese__c == true||DemandeBDEtiersEnRisqueProfile.DemandeSyntheseEnvoyee__c == true}" rendered="{!tiersEnRisqueProfile != null}" value="{!tiersRisqueSynthese}"/></td>
+                            <td><apex:outputfield rendered="{!tiersEnRisqueProfile != null && DemandeBDEtiersEnRisqueProfile != null}" value="{!DemandeBDEtiersEnRisqueProfile.DateDemandeSynthese__c}"  /></td>
+                            <td><apex:outputfield rendered="{!tiersEnRisqueProfile != null && DemandeBDEtiersEnRisqueProfile != null}" value="{!DemandeBDEtiersEnRisqueProfile.DateReceptionSynthese__c}"  /></td>
+                            <td><apex:inputCheckbox disabled="{!DemandeBDEtiersEnRisqueProfile.Bilan__c == true||DemandeBDEtiersEnRisqueProfile.DemandeBilanEnvoyee__c == true}"  rendered="{!tiersEnRisqueProfile != null}" value="{!tiersRisqueBilan}"/></td>
+                            <td><apex:outputfield rendered="{!tiersEnRisqueProfile != null && DemandeBDEtiersEnRisqueProfile != null}"  value="{!DemandeBDEtiersEnRisqueProfile.DateDemandeBilan__c}"  /></td>
+                            <td><apex:outputfield rendered="{!tiersEnRisqueProfile != null && DemandeBDEtiersEnRisqueProfile != null}"  value="{!DemandeBDEtiersEnRisqueProfile.DateReceptionBilan__c}"  /></td>
+                        </tr>
+                    </tbody>
+                </table>
+                    <apex:pageBlockButtons >
+                        <apex:commandButton action="{!Save}" value="Envoi BDE"/>
+                    </apex:pageBlockButtons>
+            </apex:pageBlock>
+        </apex:form>
+</apex:page>

@@ -1,0 +1,5 @@
+<design:component>
+	<design:attribute name="emailField" label="Email Field" />
+    <design:attribute name="buttonLabel" label="Button Label" />
+    <design:attribute name="ObjectName" label="Object Name" />
+</design:component>

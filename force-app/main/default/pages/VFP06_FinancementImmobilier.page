@@ -1,0 +1,138 @@
+<apex:page standardController="NoteComite__c" extensions="Ctrl06_FinancementImmobilier" tabStyle="NoteComite__c"  docType="html-5.0">
+    <apex:stylesheet value="{!$Resource.CSSVP06PlanDeFinancement}" />
+    <apex:form >      
+    	<apex:pageBlock mode="edit">
+    		<apex:pageBlockButtons >
+    			<apex:commandButton action="{!Save}" value="Enregistrer"/>
+    	</apex:pageBlockButtons>
+    
+    	<table class="TableFinancement">
+            <thead>
+            	<tr>
+                	<th style="width:50%; text-align:center;" colspan="2" class="FullBorder">Emplois</th>
+                    <th style="width:50%; text-align:center;" colspan="2" class="FullBorder">Ressources</th>
+                </tr>
+            </thead> 
+            <tbody>
+            	<tr style="height:20px; background-color:white;">
+                	<td colspan="4" class="FullBorder"></td>
+                </tr>
+                <tr style="height:20px; background-color:white;">
+                	<td colspan="4" style="text-align:center;" class="FullBorder">Crédit Preneur - Financement immobilier</td>
+                </tr>
+                <tr>
+                	<td style="width:30%; text-align:center;" class="FullBorder FinancementOutputText">Coût Terrain</td>
+                    <td style="width:20%" class="FullBorder"><apex:outputField styleClass="FinancementOutputText" value="{!noteComite.CoutTerrainNC__c}" /></td>
+                    <td style="width:30%; text-align:center;" class="FullBorder"><apex:outputText styleClass="FinancementOutputText" value="{!noteComite.CoutTerrainCBINC__c}" /></td>
+                    <td style="width:20%" class="FullBorder"><apex:outputField styleClass="FinancementOutputText" value="{!noteComite.CALC12NC__c}" /></td>
+                </tr>
+                <tr>
+                	<td style="width:30%; text-align:center;" class="FullBorder FinancementOutputText">Coût Acquisition</td>
+                    <td style="width:20%" class="FullBorder"><apex:outputField styleClass="FinancementOutputText" value="{!noteComite.CoutAcquisitionNC__c}" /></td>
+                    <td style="width:30%; text-align:center;" class="FullBorder">Avance preneur</td>
+                    <td style="width:20%" class="FullBorder"><apex:outputField styleClass="FinancementOutputText" value="{!noteComite.AvancePreneurNC__c}" /></td>
+                </tr>
+                <tr>
+                	<td style="width:30%; text-align:center;" class="FullBorder FinancementOutputText">Coût Construction</td>
+                    <td style="width:20%" class="FullBorder"><apex:outputField styleClass="FinancementOutputText" value="{!noteComite.CoutConstructionTravauxNC__c}" /></td>
+                    <td style="width:30%; text-align:center;" class="FullBorder">CCA</td>
+                    <td style="width:20%" class="FullBorder"><apex:inputField styleClass="FinancementInputfield" value="{!noteComite.MontantCCANC__c}" /><span class="SymboleEuro">€</span></td>
+                </tr>
+                <tr>
+                	<td style="width:30%; text-align:center;" class="FullBorder"><apex:inputField styleClass="FinancementInputfieldLibelle" value="{!noteComite.InvImmoEmploi1NC__c}" /></td>
+                    <td style="width:20%" class="FullBorder"><apex:inputField styleClass="FinancementInputfield" value="{!noteComite.MontantImmoEmploi1NC__c}" /><span class="SymboleEuro">€</span></td>
+                    <td style="width:30%; text-align:center;" class="FullBorder"><apex:inputField styleClass="FinancementInputfieldLibelle" value="{!noteComite.InvImmoRess1NC__c}" /></td>
+                    <td style="width:20%" class="FullBorder"><apex:inputField styleClass="FinancementInputfield" value="{!noteComite.MontantImmoRess1NC__c}" /><span class="SymboleEuro">€</span></td>
+                </tr>
+                <tr>
+                	<td style="width:30%; text-align:center;" class="FullBorder"><apex:inputField styleClass="FinancementInputfieldLibelle" value="{!noteComite.InvImmoEmploi2NC__c}" /></td>
+                    <td style="width:20%" class="FullBorder"><apex:inputField styleClass="FinancementInputfield" value="{!noteComite.MontantImmoEmploi2NC__c}" /><span class="SymboleEuro">€</span></td>
+                    <td style="width:30%; text-align:center;" class="FullBorder"><apex:inputField styleClass="FinancementInputfieldLibelle" value="{!noteComite.InvImmoRess2NC__c}" /></td>
+                    <td style="width:20%" class="FullBorder"><apex:inputField styleClass="FinancementInputfield" value="{!noteComite.MontantImmoRess2NC__c}" /><span class="SymboleEuro">€</span></td>
+                </tr>
+                <tr>
+                	<td style="width:30%; text-align:center;" class="FullBorder"><apex:inputField styleClass="FinancementInputfieldLibelle" value="{!noteComite.InvImmoEmploi3NC__c}" /></td>
+                    <td style="width:20%" class="FullBorder"><apex:inputField styleClass="FinancementInputfield" value="{!noteComite.MontantImmoEmploi3NC__c}" /><span class="SymboleEuro">€</span></td>
+                    <td style="width:30%; text-align:center;" class="FullBorder"><apex:inputField styleClass="FinancementInputfieldLibelle" value="{!noteComite.InvImmoRess3NC__c}" /></td>
+                    <td style="width:20%" class="FullBorder"><apex:inputField styleClass="FinancementInputfield" value="{!noteComite.MontantImmoRess3NC__c}" /><span class="SymboleEuro">€</span></td>
+                </tr>
+                <tr>
+                	<td style="width:30%; font-weight: bold; text-align:center;" class="FullBorder FinancementOutputText">Emplois - Immobilier</td>
+                    <td style="width:20%" class="FullBorder"><apex:outputField styleClass="FinancementOutputText" value="{!noteComite.CALC14NC__c}" /></td>
+                    <td style="width:30%; font-weight: bold; text-align:center;" class="FullBorder FinancementOutputText">Ressources - Immobilier</td>
+                    <td style="width:20%" class="FullBorder"><apex:outputField styleClass="FinancementOutputText" value="{!noteComite.CALC15NC__c}" /></td>
+                </tr>
+                <tr>
+                	<td style="width:30%"></td>
+                    <td style="width:20%"></td>
+                    <td style="width:30%; text-align:center;" class="FullBorder FinancementOutputText">Opération non équilibrée / différence de</td>
+                    <td style="width:20%" class="FullBorder"><apex:outputField styleClass="FinancementOutputText" value="{!noteComite.CALC16NC__c}" /></td>
+                </tr>
+                <tr style="height:20px; background-color:white;">
+                	<td colspan="4" style="text-align:center;" class="FullBorder">Crédit Preneur - Exploitation</td>
+                </tr>
+                <tr>
+                	<td style="width:30%; text-align:center;" class="FullBorder"><apex:inputField styleClass="FinancementInputfieldLibelle" value="{!noteComite.InvExplEmploi1NC__c}" /></td>
+                    <td style="width:20%" class="FullBorder"><apex:inputField styleClass="FinancementInputfield" value="{!noteComite.MontantExplEmploi1NC__c}" /><span class="SymboleEuro">€</span></td>
+                    <td style="width:30%; text-align:center;" class="FullBorder">FP</td>
+                    <td style="width:20%" class="FullBorder"><apex:inputField styleClass="FinancementInputfield" value="{!noteComite.FondsPropresExplNC__c}" /><span class="SymboleEuro">€</span></td>
+                </tr>
+                <tr>
+                	<td style="width:30%; text-align:center;" class="FullBorder"><apex:inputField styleClass="FinancementInputfieldLibelle" value="{!noteComite.InvExplEmploi2NC__c}" /></td>
+                    <td style="width:20%" class="FullBorder"><apex:inputField styleClass="FinancementInputfield" value="{!noteComite.MontantExplEmploi2NC__c}" /><span class="SymboleEuro">€</span></td>
+                    <td style="width:30%; text-align:center;" class="FullBorder">CCA</td>
+                    <td style="width:20%" class="FullBorder"><apex:inputField styleClass="FinancementInputfield" value="{!noteComite.CCAExplNC__c}" /><span class="SymboleEuro">€</span></td>
+                </tr>
+                <tr>
+                	<td style="width:30%; text-align:center;" class="FullBorder"><apex:inputField styleClass="FinancementInputfieldLibelle" value="{!noteComite.InvExplEmploi3NC__c}" /></td>
+                    <td style="width:20%" class="FullBorder"><apex:inputField styleClass="FinancementInputfield" value="{!noteComite.MontantExplEmploi3NC__c}" /><span class="SymboleEuro">€</span></td>
+                    <td style="width:30%; text-align:center;" class="FullBorder">CBM</td>
+                    <td style="width:20%" class="FullBorder"><apex:inputField styleClass="FinancementInputfield" value="{!noteComite.CBMExplNC__c}" /><span class="SymboleEuro">€</span></td>
+                </tr>
+                <tr>
+                	<td style="width:30%; text-align:center;" class="FullBorder"><apex:inputField styleClass="FinancementInputfieldLibelle" value="{!noteComite.InvExplEmploi4NC__c}" /></td>
+                    <td style="width:20%" class="FullBorder"><apex:inputField styleClass="FinancementInputfield" value="{!noteComite.MontantExplEmploi4NC__c}" /><span class="SymboleEuro">€</span></td>
+                    <td style="width:30%; text-align:center;" class="FullBorder">Prêt MLT</td>
+                    <td style="width:20%" class="FullBorder"><apex:inputField styleClass="FinancementInputfield" value="{!noteComite.PretMLTExplNC__c}" /><span class="SymboleEuro">€</span></td>
+                </tr>
+                <tr>
+                	<td style="width:30%; text-align:center;" class="FullBorder"><apex:inputField styleClass="FinancementInputfieldLibelle" value="{!noteComite.InvExplEmploi5NC__c}" /></td>
+                    <td style="width:20%" class="FullBorder"><apex:inputField styleClass="FinancementInputfield" value="{!noteComite.MontantExplEmploi5NC__c}" /><span class="SymboleEuro">€</span></td>
+                    <td style="width:30%; text-align:center;" class="FullBorder">Prêt CT</td>
+                    <td style="width:20%" class="FullBorder"><apex:inputField styleClass="FinancementInputfield" value="{!noteComite.PretCTEExplNC__c}" /><span class="SymboleEuro">€</span></td>
+                </tr>
+                <tr>
+                	<td style="width:30%; text-align:center;" class="FullBorder"><apex:inputField styleClass="FinancementInputfieldLibelle" value="{!noteComite.InvExplEmploi6NC__c}" /></td>
+                    <td style="width:20%" class="FullBorder"><apex:inputField styleClass="FinancementInputfield" value="{!noteComite.MontantExplEmploi6NC__c}" /><span class="SymboleEuro">€</span></td>
+                    <td style="width:30%; text-align:center;" class="FullBorder">Emprunt obligatoire</td>
+                    <td style="width:20%" class="FullBorder"><apex:inputField styleClass="FinancementInputfield" value="{!noteComite.EmpruntObligatoireExplNC__c}" /><span class="SymboleEuro">€</span></td>
+                </tr>
+                <tr>
+                	<td style="width:30%; font-weight: bold; text-align:center;" class="FullBorder FinancementOutputText">Emplois - Exploitation</td>
+                    <td style="width:20%" class="FullBorder"><apex:outputField styleClass="FinancementOutputText" value="{!noteComite.CALC17NC__c}" /></td>
+                    <td style="width:30%; font-weight: bold; text-align:center;" class="FullBorder FinancementOutputText">Ressources - Exploitation</td>
+                    <td style="width:20%" class="FullBorder"><apex:outputField styleClass="FinancementOutputText" value="{!noteComite.CALC18NC__c}" /></td>
+                </tr>
+                <tr>
+                	<td style="width:30%; font-weight: bold; text-align:center;" class="FullBorder FinancementOutputText">Total Emplois</td>
+                    <td style="width:20%" class="FullBorder"><apex:outputField styleClass="FinancementOutputText" value="{!noteComite.CALC19NC__c}" /></td>
+                    <td style="width:30%; font-weight: bold; text-align:center;" class="FullBorder FinancementOutputText">Total Ressources</td>
+                    <td style="width:20%" class="FullBorder"><apex:outputField styleClass="FinancementOutputText" value="{!noteComite.CALC20NC__c}" /></td>
+                </tr>
+                <tr>
+                	<td style="width:30%"></td>
+                    <td style="width:20%"></td>
+                    <td style="width:30%; text-align:center;" class="FullBorder FinancementOutputText">Opération non équilibrée / différence de</td>
+                    <td style="width:20%" class="FullBorder"><apex:outputField styleClass="FinancementOutputText" value="{!noteComite.CALC21NC__c}" /></td>
+                </tr>
+                 <tr>
+                	<td colspan="3" style="width:80%; font-weight: bold; text-align:center;" class="FullBorder FinancementOutputText">QP Apport</td>
+                    <td style="width:20%" class="FullBorder"><apex:outputField styleClass="FinancementOutputText" value="{!noteComite.CALC22NC__c}" /></td>
+                </tr>
+            </tbody>
+    	</table>
+            
+        </apex:pageBlock>
+    </apex:form>
+                    
+</apex:page>

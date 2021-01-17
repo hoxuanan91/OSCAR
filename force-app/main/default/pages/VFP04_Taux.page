@@ -1,0 +1,54 @@
+<apex:page docType="html-5.0" standardController="CalculetteROE__c" extensions="Ctrl04_VFPTaux" sidebar="true" showHeader="true" tabStyle="BddRoe__c" cache="true">
+  <script>
+    function search(){
+        SearchAtSemaineConstation();
+    }
+</script>
+ 
+   <apex:form >
+        <apex:pageBlock title="Calcul ROE">
+  		<apex:pageBlockSection title="Semaine Constatation"  columns="1"  > 
+        <apex:selectList size="1" value="{!ListValueSemaineConstation}">
+            <apex:actionSupport event="onchange" action="{!SearchAtSemaineConstation}" reRender="hiddenBlock"/>
+           <apex:selectOptions value="{!SemaineConstation}"/>
+ 		</apex:selectList>    
+   		<!-- <apex:commandButton action="{!SearchAtSemaineConstation}" rerender="hiddenBlock">
+            <apex:param name="ValueSemaineConstation" value="{!ListValueSemaineConstation}"  assignTo="{!ValueSemaineConstation}"/>
+        </apex:commandButton>
+-->
+        </apex:pageBlockSection>
+        <apex:pageBlockSection title="Taux CMS - Euribor 3 mois - Vendredi précédant la semaine {!ValueSemaineConstation}"  columns="1"  > 
+                   <table > 
+                        <apex:repeat value="{!MapTauxCMS}" var="outerKey">
+						 <tr>  
+                         <td><span style="font-weight:bold"> {!outerKey} </span></td>
+                              <td  ><span>   {! MapTauxCMS[outerKey]   } </span></td>
+                                     
+                       </tr>
+                     </apex:repeat> 
+                     <tr>  
+                         <td><span style="font-weight:bold">Euribor 3 mois</span></td>
+                              <td  ><span>   {! Euribor3mois } </span></td>
+                                     
+                       </tr>
+                   </table> 
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="Taux Fixe - Taux Variable {!ValueSemaineConstation}"  columns="1"  > 
+                   <table > 
+                       <th>Année</th>
+                       <th>Taux fixe - TCI</th>
+                       <th>Coût de liquidité</th>
+                        <apex:repeat value="{!MapTauxFixe}" var="outerKey">
+						 <tr  >  
+                         	  <td style="width:100px"><span style="font-weight:bold"> {!outerKey} </span></td>
+                              <td style="width:100px"><span>   {! MapTauxFixe[outerKey]   } </span></td>
+                              <td  style="width:100px"><span>   {! MapTauxVariable[outerKey]   } </span></td>       
+                        </tr>
+                     </apex:repeat> 
+                   </table> 
+            </apex:pageBlockSection>
+            
+         </apex:pageBlock>
+   
+    </apex:form>
+</apex:page>

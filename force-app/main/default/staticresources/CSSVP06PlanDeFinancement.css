@@ -1,0 +1,44 @@
+.TableFinancement{
+    width:60%;
+    background-color:#F5F5F5;
+    border-collapse: collapse;
+    border-spacing: 0px;
+}
+.TableFinancement th{    
+    text-align:right;
+    padding:10px 0px;
+    background-color:#581d74;
+    color:white;
+}
+.TableFinancement td{    
+    text-align:right;
+}
+.FullBorder {
+    border-left:1px solid #bbb;
+    border-right:1px solid #bbb;
+    border-top:1px solid #bbb;
+    border-bottom:1px solid #bbb;
+}
+
+.FinancementInputfieldLibelle{
+    width:90%;
+    height:100%;
+    text-align:center;
+	border:0;
+    padding:6px;
+}
+
+.FinancementInputfield{
+    width:80%;
+    height:100%;
+    text-align:right;
+ 	border:0;
+}
+.FinancementOutputText{
+    height:100%;
+    text-align:right;
+    padding:6px;
+}
+.SymboleEuro{
+    style="width:10%"
+}

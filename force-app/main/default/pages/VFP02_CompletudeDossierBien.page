@@ -1,0 +1,72 @@
+<apex:page docType="html-5.0"  standardController="Bien_CBI__c" extensions="Ctrl02_CompletudeDossier"  sidebar="false" showHeader="false" cache="true">  
+ 
+     <apex:form id="myform">   
+		<apex:pageBlock > 
+           <apex:repeat value="{!GlobalProjet}" var="LePoolbien">
+                <apex:variable var="ProjetID" value="{!LePoolbien['Projet__r.id']}" /> 
+                <apex:variable var="ProjetName" value="{!LePoolbien['Projet__r.Name']}" />  
+            	<apex:outputPanel > Complétude du Projet : <a href="VFP02_CompletudeDossierProjet?id={!ProjetID}">{!ProjetName}</a></apex:outputPanel> 
+            <br />
+           </apex:repeat>
+       </apex:pageBlock>
+         
+    <apex:repeat value="{!ListSectionBiens}" var="key">
+        <apex:pageBlock title="{!key}"  > 
+             <apex:repeat value="{!ListSectionCategorieAssociatedBiens[key]}" var="key2"> 
+                  <apex:pageBlockSection title=" {!key2} "  columns="1"  >  
+                      <apex:pageBlock >
+                          <table> 
+                  			 <tr>
+                                    <td style="width: 696px;"><b>Nom du fichier</b></td> 
+                                    <td><b>Complétude</b></td>  
+                                    <td><b>Document(s) Joint(s)</b></td>  
+                                     
+                                  	<td><b>Client</b></td> 
+                                    <td><b>Réseau</b></td>
+                                    <td><b>Chef de file</b></td>  
+                                    <td style="text-align: center;"><b>Date de Validité</b></td>
+                   					<td style="text-align: center;"><b>Date de Relance</b></td>
+                            </tr>
+                            <apex:repeat value="{!ListCategorieLabelAssociatedBiens[key2]}" var="key3"> 
+                                <tr>
+                                    <td style="width: 696px;">{!key3}</td>
+                                    <td>      
+                                      <apex:inputCheckbox style="margin-left: 50%;"  value="{!ListDocMandatory[key3]}"   />   
+                                    </td>
+                                    <td >
+                                        <apex:inputCheckbox style="margin-left: 50%;" value="{!ListDocMandatoryUploaded[key3]}"   disabled="true"   id="ListDocMandatoryUploaded"/>
+                                     </td>
+                                    
+									<td >
+                                        <apex:inputCheckbox style="margin-left: 50%;" value="{!ListDemandeClient[key3]}"  />
+                                    </td> 
+                                    <td >
+                                             <apex:inputCheckbox style="margin-left: 50%;" value="{!ListDemandeDistributeur[key3]}" />
+                                    </td> 
+ 									<td  >
+                                             <apex:inputCheckbox style="margin-left: 50%;" value="{!ListDemandeChefDeFile[key3]}" /> 
+                                    </td> 
+                                    
+                                     <td >
+                                             <apex:input Type="auto" value="{!ListDateValidite[key3]}"  />
+                                    </td> 
+                                    <td >
+                                             <apex:input Type="auto" value="{!ListDateDeRelance[key3]}"  />
+                                    </td>
+                                    
+                                </tr>
+            				</apex:repeat>
+                              
+                          </table>   
+                        <apex:commandLink action="{!SaveCompletude}" value="Sauvegarder" styleClass="btn" style="text-decoration:none">
+                            <apex:param assignTo="{!TypeDobjet}" value="bien" name="TypeDobjet"/>
+                      </apex:commandLink>
+                      </apex:pageBlock> 
+                  </apex:pageBlockSection>  
+            </apex:repeat> 
+         
+        </apex:pageBlock>
+        
+    </apex:repeat> 
+  </apex:form>
+</apex:page>

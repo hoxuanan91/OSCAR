@@ -1,0 +1,19 @@
+<apex:page docType="html-5.0" standardController="CalculetteROE__c" extensions="Ctrl07_NoteComite" tabStyle="CalculetteROE__c"  sidebar="true" showHeader="true" cache="true">
+     <apex:form id="changePrivacyForm">   
+       <apex:pageBlock >
+    	      
+    			<apex:pageBlockSection rendered="{!CasTypeDeProposition==1}">  
+                    <center><apex:commandLink value="Cliquez ici pour valider la création de la Note Comité" action="{!SaveNewNoteComite}"  styleClass="btn" style="text-decoration:none"></apex:commandLink> </center>              
+                </apex:pageBlockSection>
+                <apex:pageBlockSection rendered="{!CasTypeDeProposition==2}">
+                	<center><apex:commandLink value="Enregistrer les modifications MAJ" action="{!SaveMAJNoteComite}"  styleClass="btn" style="text-decoration:none"></apex:commandLink> </center>                 
+                </apex:pageBlockSection>
+            	<apex:pageBlockSection rendered="{!CasTypeDeProposition==3}">
+                	<center><apex:commandLink value="Note Comité déjà existante pour ce Projet Associé, merci de cliquer ici pour retourner sur la Calculette" action="{!Fermer}"  styleClass="btn" style="text-decoration:none"></apex:commandLink> </center>                 
+                </apex:pageBlockSection>
+     		 	 <apex:pageBlockSection rendered="{!CasTypeDeProposition==4}">
+                	<center><apex:commandLink value="Votre Calculatrice n'est pas valide, merci de la valider" action="{!Fermer}"  styleClass="btn" style="text-decoration:none"></apex:commandLink> </center>                 
+                </apex:pageBlockSection> 
+         </apex:pageBlock>
+    </apex:form>
+</apex:page>

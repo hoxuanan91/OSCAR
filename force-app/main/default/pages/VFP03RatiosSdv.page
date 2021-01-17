@@ -1,0 +1,45 @@
+<apex:page standardController="PhaseDeBien__c" extensions="Ctrl03_Ratios" tabStyle="PhaseDeBien__c"  sidebar="true" showHeader="true" >
+   <apex:stylesheet value="{!$Resource.CSSVFP03PhaseBienNatureSurface}" />
+    <apex:form >      
+
+                        <table class="Ventilation_Table">
+                            <thead>
+                                <tr>
+                                    <th style="width:28%"></th>
+                                    <th style="width:24%" class="border_left_bold natixis_background_color" colspan = "2">{!phaseDeBien.Colonne1__c}<br></br>SdV</th>
+                                    <th style="width:24%" class="border_left_bold natixis_background_color" colspan = "2">{!phaseDeBien.Colonne2__c}<br></br>SdV</th>
+                                    <th style="width:24%" class="border_left_bold natixis_background_color" colspan = "2">Total</th>                          
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="border_right_bold_inner" style="background-color:#DDD">Prix/m² terrain</td>
+                                    <td class="border_left_bold" colspan = "2"><apex:outputfield styleClass="natixis_outputfield" value="{!phaseDeBien.CALC37SdVNC__c}" /> €/m²</td>
+                                    <td class="border_left_bold" colspan = "2"><apex:outputfield styleClass="natixis_outputfield" value="{!phaseDeBien.CALC37BISSdVNC__c}" /> €/m²</td>
+                                    <td class="border_left_bold" colspan = "2"><apex:outputfield styleClass="natixis_outputfield" value="{!phaseDeBien.CALC37TERSdVNC__c}" /> €/m²</td>
+                                </tr>
+                                <tr>
+                                    <td class="border_right_bold_inner" style="background-color:#DDD">Prix/m²</td>
+                                    <td class="border_left_bold" colspan = "2"><apex:outputfield styleClass="natixis_outputfield" value="{!phaseDeBien.CALC38SdVNC__c}" /> €/m²</td>
+                                    <td class="border_left_bold" colspan = "2"><apex:outputfield styleClass="natixis_outputfield" value="{!phaseDeBien.CALC38BISSdVNC__c}" /> €/m²</td>
+                                    <td class="border_left_bold" colspan = "2"><apex:outputfield styleClass="natixis_outputfield" value="{!phaseDeBien.CALC38TERSdVNC__c}" /> €/m²</td>
+                                </tr>
+                                <tr>
+                                    <td class="border_right_bold_inner" style="background-color:#DDD">Prix/m² hors foncier</td>
+                                    <td class="border_left_bold" colspan = "2"><apex:outputfield styleClass="natixis_outputfield" value="{!phaseDeBien.CALC39SdVNC__c}" /> €/m²</td>
+                                    <td class="border_left_bold" colspan = "2"><apex:outputfield styleClass="natixis_outputfield" value="{!phaseDeBien.CALC39BISSdVNC__c}" /> €/m²</td>
+                                    <td class="border_left_bold" colspan = "2"><apex:outputfield styleClass="natixis_outputfield" value="{!phaseDeBien.CALC39TERSdVNC__c}" /> €/m²</td>
+                                </tr>
+                                <tr>
+                                    <td class="border_right_bold_inner" style="background-color:#DDD">Prix net d'AP</td>
+                                    <td class="border_left_bold" colspan = "2"><apex:outputfield styleClass="natixis_outputfield" value="{!phaseDeBien.CALC40SdVNC__c}" /> €/m²</td>
+                                    <td class="border_left_bold" colspan = "2"><apex:outputfield styleClass="natixis_outputfield" value="{!phaseDeBien.CALC40BISSdVNC__c}" /> €/m²</td>
+                                    <td class="border_left_bold" colspan = "2"><apex:outputfield styleClass="natixis_outputfield" value="{!phaseDeBien.CALC40TERSdVNC__c}" /> €/m²</td>
+                                </tr>
+                            </tbody>
+        				</table>
+    </apex:form>
+    
+    
+    
+</apex:page>

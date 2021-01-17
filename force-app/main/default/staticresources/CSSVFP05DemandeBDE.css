@@ -1,0 +1,11 @@
+.demandeTable {   
+    width:40%;  
+}
+
+.demandeTable th{    
+    text-align:center;
+}
+
+.demandeTable td{    
+    text-align:center;
+}

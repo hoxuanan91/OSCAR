@@ -1,0 +1,245 @@
+<apex:page standardController="CalculetteROE__c" extensions="Ctrl01_CalculetteROE"  cache="true" > 
+  	 <apex:stylesheet value="{!URLFOR($Resource.CSSVFP01CalculetteROE, '')}" />
+
+	<apex:pageBlock title="Calcul ROE">
+        <apex:pageBlockSection title="Résultat synthétique du calcul (Récapitulatif du dossier)"  columns="1"  > 
+               <apex:pageBlock >
+       		<table style="font-size: 13px; " class="TableROEResultatSynth"> 
+			 <tr >
+                 <td class="TableROEResultatSynthFirstRow"><span style="font-weight:bold">Marge nette - version standard</span></td>
+				<td  class="TableROEResultatSynthSecondRow">
+                    <span style="font-weight:bold"> 
+                     	<apex:outputField value="{!currentCalc.MargeNetteStandard__c}"/>
+                    </span>
+                </td>
+
+			</tr>  
+             <tr>
+                 <td   class="TableROEResultatSynthFirstRow"><span style="font-weight:bold">R O E après impôt - version standard</span></td>
+				<td>
+                  <span style="font-weight:bold">  
+                   <apex:outputField value="{!currentCalc.ROEmoyenApresImpotStandard__c}"/>     
+                 </span>
+                 </td> 
+			</tr>
+           <tr  >
+               <td   class="TableROEResultatSynthFirstRow"><span style="font-weight:bold">Marge nette - version IRBA</span></td>
+				<td >
+                 <span style="font-weight:bold">
+                     <apex:outputField value="{!currentCalc.MargeNetteIRBA__c}"/>
+                 </span>
+                    
+               
+               </td> 
+			</tr>
+           <tr  >
+               <td  class="TableROEResultatSynthFirstRow"><span style="font-weight:bold">R O E après impôt - version IRBA</span></td>
+				<td> 
+                  <span style="font-weight:bold"> 
+                        <apex:outputField value="{!currentCalc.ROEMApresimpotIRBA__c}"/>
+                  </span>
+               </td> 
+			</tr>
+      	  <tr  >
+              	<td  class="TableROEResultatSynthFirstRow"><span style="font-weight:bold">PD - probabilité de défaut</span></td>
+				<td> 
+                   <span style="font-weight:bold">  
+                       <apex:outputField value="{!currentCalc.ProbabiliteDeDefaut__c}"/>
+                   </span>
+                </td> 
+	      </tr>  
+          <tr  >
+          	    <td  class="TableROEResultatSynthFirstRow"><span style="font-weight:bold">LGD au départ du contrat</span></td>
+				<td >
+                  <span style="font-weight:bold">  
+                      <apex:outputField value="{!currentCalc.LGD__c}"/>
+                  </span>
+                </td> 
+	      </tr>  
+                      
+               
+		</table> 
+              </apex:pageBlock>
+        </apex:pageBlockSection>
+        
+          <apex:pageBlockSection title="Résultat detaillé"  columns="1"  > 
+               <apex:pageBlock >
+		<table class="TableROE">
+			<tr style="height: 20px;">
+                <td  class="TableROEFirstRow" ><span style="font-weight:bold">RENTABILITÉ DU BARÈME</span></td>
+				<td  class="TableROESecondRow" colspan="2"><span style="font-weight:bold">VERSION STANDARD</span></td>
+              
+                <td  class="TableROEThirdCollapseRow"  colspan="2"><span style="font-weight:bold">VERSION IRBA</span></td>
+             
+			</tr> 
+			<tr>
+               	<td class="TableROEFirstRow">Encours moyen de l'opération sur la durée (actualisé)</td>
+                <td><span style="font-weight:bold"> 
+                     <apex:outputField value="{!currentCalc.EncoursMoyenOperationDuree__c}"/> 
+                    </span>
+                </td>
+                <td class="TableROEThirdRow"></td>
+                <td>
+                    <span style="font-weight:bold">
+                    <apex:outputField value="{!currentCalc.EncoursMoyenOperationDuree__c}"/>
+                    </span>
+                </td>
+                <td></td>
+			</tr>
+            <tr>
+               	<td class="TableROEFirstRow">Marge brute financière actualisée</td>
+				<td> <apex:outputField value="{!currentCalc.MargeBruteFinanciereActualisee__c}"/>  </td>
+                <td class="TableROEThirdRow"><apex:outputText value="{!currentCalc.MargeBruteFinanciereActualiseePerc__c}" />%</td>
+				<td> <apex:outputField value="{!currentCalc.MargeBruteFinanciereActualisee__c}"/></td>
+                <td> <apex:outputText value="{!currentCalc.MargeBruteFinanciereActualiseePerc__c}" />%</td>
+			</tr>
+             <tr>
+               	<td class="TableROEFirstRow">Frais de dossier</td>
+                 <td><apex:outputField value="{!currentCalc.FraisDeDossier__c}"/></td>
+                 <td class="TableROEThirdRow"><apex:outputText value="{!currentCalc.FraisDeDossierPerc__c}" />%</td>
+				 <td><apex:outputField value="{!currentCalc.FraisDeDossier__c}"/></td>
+                 <td><apex:outputText value="{!currentCalc.FraisDeDossierPerc__c}" />%</td>
+			</tr>
+     		<tr>
+               	<td class="TableROEFirstRow">Commission de risque actualisée BP / CE</td> 
+                 <td><apex:outputField value="{!currentCalc.CommissionDeRisqueActualiseeBPCE__c}"/></td>
+                <td class="TableROEThirdRow"><apex:outputText value="{!currentCalc.CommissionDeRisqueActualisBPCEPerc__c}" />% </td>
+                 <td><apex:outputField value="{!currentCalc.CommissionDeRisqueActualiseeBPCE__c}"/></td>
+                 <td><apex:outputText value="{!currentCalc.CommissionDeRisqueActualisBPCEPerc__c}" />%</td>
+			</tr>
+            <tr>
+               	<td class="TableROEFirstRow">Commission apport flat</td>
+                 <td><apex:outputField value="{!currentCalc.CommissionApportFlatNegatif__c}"/></td> 
+                <td class="TableROEThirdRow"><apex:outputText value="{!currentCalc.CommissionApportFlatPerc__c}" />%</td>
+				    <td><apex:outputField value="{!currentCalc.CommissionApportFlatNegatif__c}"/></td> 
+                 <td><apex:outputText value="{!currentCalc.CommissionApportFlatPerc__c}" />%</td>
+			</tr>
+             <tr>
+               	<td class="TableROEFirstRow">Coûts d'exploitation actualisés</td>
+                <td><apex:outputField value="{!currentCalc.CoutsDexploitationActualises__c}"/></td> 
+				 
+                <td class="TableROEThirdRow"><apex:outputText value="{!currentCalc.CoutsDexploitationActualisesSTDPerc__c}" />%</td>
+                 <td><apex:outputField value="{!currentCalc.CoutsDexploitationActualisesIRBA__c}"/></td> 
+			 
+                 <td><apex:outputText value="{!currentCalc.CoutsDexploitationActualisesIRBAPerc__c}" />%</td>
+			</tr>
+         
+             <tr>
+               	<td class="TableROEFirstRow">   Rémunération des FPN</td>
+				<td><apex:outputText value=" " /></td>
+                 <td class="TableROEThirdRow"></td>
+                 <td><apex:outputField value="{!currentCalc.RemunerationDesFPN__c}"/></td> 
+				   <td><apex:outputText value="{!currentCalc.RemunrationDesFPNPerc__c}" />%</td>
+          
+			</tr>
+            <tr>
+               	<td class="TableROEFirstRow">PNB additionnel</td>
+                <td><apex:outputField value="{!currentCalc.PNBAdditionnel__c}"/></td>
+                <td class="TableROEThirdRow"></td>
+				<td><apex:outputField value="{!currentCalc.PNBAdditionnel__c}"/></td> 
+                <td><apex:outputText value="{!currentCalc.PNBAdditionnelperc__c}" />%</td>
+			</tr>
+            <tr>
+               	<td class="TableROEFirstRow">Expected Loss</td>
+                <td><apex:outputText value=" " /></td>
+                <td class="TableROEThirdRow"></td>
+				<td><apex:outputField value="{!currentCalc.ExpectedLoss__c}"/></td>
+                <td><apex:outputText value="{!currentCalc.ExpectedLossPerc__c}" />%</td>
+			</tr>
+            <tr>
+                <td class="TableROEFirstRow"><span style="font-weight:bold">PNB</span></td>
+                <td><apex:outputField value="{!currentCalc.PNBStandard__c}"/></td>
+                <td class="TableROEThirdRow"><apex:outputText value="{!currentCalc.PNBStandardPerc__c}" />%</td>
+                <td><apex:outputField value="{!currentCalc.PNBIRBA__c}"/></td>
+                <td><apex:outputText value="{!currentCalc.PNBIRBAPerc__c}" />%</td>
+			</tr>
+            <tr>
+                <td class="TableROEFirstRow"><span style="font-weight:bold">Résultat courant avant impôt (y.c rémunération FP)</span></td>
+				<td><apex:outputField value="{!currentCalc.ResultatCourantAvantImpotStandard__c}"/></td>
+                <td class="TableROEThirdRow"></td>
+				<td><apex:outputField value="{!currentCalc.ResultatCourantAvantImpotIRBA__c}" /></td>
+                <td></td>
+			</tr>                        
+            <tr>
+                <td class="TableROEFirstRow TableROEBackgroundMint"><span style="font-weight:bold">Marge nette</span></td>
+				
+                <td><apex:outputField value="{!currentCalc.MargeNetteStandard__c}"/></td>
+                <td class="TableROEThirdRow"></td>
+				
+                <td><apex:outputField value="{!currentCalc.MargeNetteIRBA__c}"/></td>
+                <td></td>
+			</tr>   
+            
+		</table> 
+       	</apex:pageBlock>
+        </apex:pageBlockSection>
+        <apex:pageBlockSection title="ROE"  columns="1"  > 
+               <apex:pageBlock >
+		<table style="font-size: 13px;"  class="TableROEResultatSynth">
+			<tr style="height: 20px;">
+				<td   class="TableROEResultatSynthFirstRow"> </td>
+				<td   class="TableROEResultatSynthSecondRow   TableROEBackgroundMint "><span style="font-weight:bold">VERSION STANDARD</span></td>
+                <td   class="TableROEBackgroundBlueMint TableROEResultatSynthThirdRow"><span style="font-weight:bold">VERSION IRBA</span></td>
+			</tr> 
+             <tr>
+                 <td class="TableROEResultatSynthFirstRow"><span style="font-weight:bold">R O E moyen avant impôt</span></td>
+				<td class="TableROEResultatSynthSecondRow">
+                    <apex:outputField value="{!currentCalc.ROEMoyenAvantImpotStd__c}"/>
+               </td>
+               <td><apex:outputField value="{!currentCalc.ROEMAimpotIRBA__c}"/></td>
+			</tr>   
+             <tr>
+                 <td class="TableROEResultatSynthFirstRow"><span style="font-weight:bold">R O E moyen après impôt</span></td>
+				 <td class="TableROEResultatSynthSecondRow"> 
+                     <apex:outputField value="{!currentCalc.ROEmoyenApresImpotStandard__c}"/>   
+                 </td>
+				 <td><apex:outputField value="{!currentCalc.ROEMApresimpotIRBA__c}"/></td>
+			</tr> 
+            <tr>
+                <td class="TableROEResultatSynthFirstRow"><span style="font-weight:bold">RWA moyen</span></td>
+				<td class="TableROEResultatSynthSecondRow">     <apex:outputField value="{!currentCalc.RWAMoyenStandard__c}"/>  </td> 
+				<td>  <apex:outputField value="{!currentCalc.RWAMoyen__c}"/>   </td>
+			</tr>   
+             <tr>
+                 <td class="TableROEResultatSynthFirstRow"><span style="font-weight:bold">Besoins FP moyen</span></td>
+                 <td class="TableROEResultatSynthSecondRow">     <apex:outputField value="{!currentCalc.BesoinsFPmoyenSTD__c}"/>  </td> 
+                 <td><apex:outputField value="{!currentCalc.BesoinsFPMoyenIRBA__c}"/>  </td> 
+				 
+			</tr>    
+                   </table>
+             </apex:pageBlock>
+          </apex:pageBlockSection> 
+              <apex:pageBlockSection title="ROE BPCE"  columns="1"  > 
+               <apex:pageBlock >
+                <table style="font-size: 13px;" class="TableROEResultatSynth"> 
+               <tr style="height: 20px;">
+                    <td class="TableROEResultatSynthFirstRow"> </td> 
+                    <td class="TableROEBackgroundBlueMint TableROEResultatSynthSecondRow"><span style="font-weight:bold">VERSION IRBA</span></td>
+				</tr> 
+                    
+			  <tr>
+                 <td class="TableROEResultatSynthFirstRow">  <span style="font-weight:bold">R O E moyen avant impôt</span></td>
+		         <td><apex:outputField value="{!currentCalc.ROEMoyenAvantImpotIRBABPCE__c}" /></td>
+				 
+			</tr>   
+             <tr>
+                 <td class="TableROEResultatSynthFirstRow"><span style="font-weight:bold">R O E moyen après impôt</span></td>
+				<td><apex:outputField value="{!currentCalc.ROEMoyenApresImpotIRBABPCE__c}" /></td>
+				 
+			</tr> 
+            <tr>
+                <td class="TableROEResultatSynthFirstRow"><span style="font-weight:bold">RWA moyen</span></td>
+				<td><apex:outputField value="{!currentCalc.RWAMoyenBPCE__c}"  /></td>
+				 
+			</tr>   
+             <tr>
+                 <td class="TableROEResultatSynthFirstRow"><span style="font-weight:bold">Besoins FP moyen</span></td>
+				<td><apex:outputField value="{!currentCalc.BesoinsFPMoyenIRBABPCE__c}" /></td>
+				 
+			</tr>    
+		</table> 
+              </apex:pageBlock>
+        </apex:pageBlockSection>
+            
+	</apex:pageBlock>
+</apex:page>

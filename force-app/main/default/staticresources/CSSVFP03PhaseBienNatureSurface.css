@@ -1,0 +1,66 @@
+.Ventilation_Table{
+    width:40%;
+    background-color:#F5F5F5;
+    border-collapse: collapse;
+    border-spacing: 0px;
+    border-right:2px solid #222;
+}
+.Ventilation_Table th{    
+    text-align:center;
+    padding:10px 6px;
+    color:white;
+}
+.Ventilation_Table td{    
+    text-align:center;
+    min-width:105px;
+}
+.Ventilation_Table tr{    
+    height: 27px;
+    border-bottom: 1px solid #bbb;
+}
+.border_left_bold{
+    border-left:2px solid black;
+}
+.border_left_bold_inner{
+    border-left:2px solid black;
+    border-right:1px solid #bbb;
+    border-top:1px solid #bbb;
+    border-bottom:1px solid #bbb;
+}
+.border_right_bold_inner{
+    border-right:2px solid black;
+    border-left:1px solid #bbb;
+    border-top:1px solid #bbb;
+    border-bottom:1px solid #bbb;
+}
+.natixis_background_color{
+    background-color:#581d74;
+}
+.natixis_inputfield{
+    width:69px;
+    padding:5px;
+    text-align:right;
+    margin-bottom:-2px;
+    margin-top:-2px;
+    margin-left: -9px;
+}
+.natixis_outputfield{
+    width:100px;
+    padding:5px;
+    text-align:right;
+}
+.natixis_picklist{
+    width:101.5%;
+    padding:5px;
+    text-align:right;
+    margin:-2px -2px -2px -1px;
+}
+.bEditBlock input, .bEditBlock select, .bEditBlock img, .quickCreateModule input, .quickCreateModule select, .quickCreateModule img{
+    vertical-align: middle;
+    margin-right: -1px;
+}
+.natixis_input_first_column{
+    padding:5px;
+    text-align:right;
+    margin:-2px -2px -2px -2px;
+}

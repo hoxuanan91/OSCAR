@@ -1,0 +1,70 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId">
+    <aura:attribute name="recordError" type="String" access="private"/>
+    <aura:attribute name="opportunityRecord" type="Object"/>
+    <force:recordData aura:id="recordHandler"
+                      recordId="{!v.recordId}"
+                      targetFields="{!v.opportunityRecord}"
+                      fields="Account.Apporteur__r.Name,Account.Apporteur__r.Id,Account.Agence_Reseau__c,Account.Conseiller_client__r.FirstName,Account.Conseiller_client__r.LastName,Account.Conseiller_client__r.Id,Account.Conseiller_client__r.Email,Account.Conseiller_client__r.Phone,Account.Conseiller_client__r.MobilePhone"
+                      targetError="{!v.recordError}"
+                      />
+    
+    <div> 
+        <lightning:card title="Apporteur" iconName="standard:account">
+            <div class="slds-grid slds-wrap" style="margin:1em">
+                <div class="slds-col slds-size_1-of-2 slds-form-element_readonly">
+                    <label class="slds-form-element__label">Nom de l'apporteur</label>
+                    
+                    <div> 
+                        <ui:outputURL value="{!'/' + v.opportunityRecord.Account.Apporteur__r.Id}" label="{!v.opportunityRecord.Account.Apporteur__r.Name}" /> 
+                    </div>
+                    
+                </div>
+                
+                <div class="slds-col slds-size_1-of-2 slds-form-element_readonly">
+                    <label class="slds-form-element__label">Agence</label>
+                    
+                    <div>  {!v.opportunityRecord.Account.Agence_Reseau__c}</div>
+                    
+                </div>
+                
+                <div class="slds-col slds-size_1-of-2 slds-form-element_readonly">
+                    <label class="slds-form-element__label">Prénom du Conseiller</label>
+                    
+                    <div>  <ui:outputURL value="{!'/' + v.opportunityRecord.Account.Conseiller_client__r.Id}" label="{!v.opportunityRecord.Account.Conseiller_client__r.FirstName}" /> 
+                    </div>
+                    
+                </div>
+                
+                <div class="slds-col slds-size_1-of-2 slds-form-element_readonly">
+                    <label class="slds-form-element__label">Nom du conseiller</label>
+                    
+                    <div>  {!v.opportunityRecord.Account.Conseiller_client__r.LastName}</div>
+                    
+                </div>
+                
+                
+                <div class="slds-col slds-size_1-of-2 slds-form-element_readonly">
+                    <label class="slds-form-element__label">Mobile du conseiller</label>
+                    
+                    <div> <lightning:formattedPhone value="{!v.opportunityRecord.Account.Conseiller_client__r.MobilePhone}" /> </div>
+                    
+                </div>
+                
+                
+                <div class="slds-col slds-size_1-of-2 slds-form-element_readonly">
+                    <label class="slds-form-element__label">Téléphone du conseiller</label>
+                    
+                    <div> <lightning:formattedPhone value="{!v.opportunityRecord.Account.Conseiller_client__r.Phone}" /> </div>
+                    
+                </div>
+                 <div class="slds-col slds-size_1-of-1 slds-form-element_readonly">
+                <label class="slds-form-element__label">Email du conseiller</label>
+                
+                <div> <lightning:formattedEmail value="{!v.opportunityRecord.Account.Conseiller_client__r.Email}" /> </div>
+                
+            </div>
+            </div>
+           
+        </lightning:card>
+    </div>
+</aura:component>

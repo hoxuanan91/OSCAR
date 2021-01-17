@@ -1,0 +1,17 @@
+<aura:component controller="QuickCaseController" implements="flexipage:availableForAllPageTypes,force:hasRecordId" access="global">
+    <aura:attribute name="currentContract" type="Contract"/>
+    <aura:attribute name="customRefs" type="Reference_GED__mdt" />
+    <aura:attribute name="hasErrors" type="Boolean" />
+    <aura:attribute name="recordId" type="Id" />
+ 
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+      
+    <aura:if isTrue="{!v.hasErrors}">
+    	<div class="recordSaveError">
+        	<ui:message title="Error" severity="error" closable="true">
+            Could not retrieve values 
+            </ui:message>
+        </div>
+    </aura:if>
+	<ui:button label="Ouvrir la GED" press="{!c.openActionWindow}" disabled="true" aura:id="GEDbutton"/>
+</aura:component>

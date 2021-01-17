@@ -1,0 +1,90 @@
+<apex:page standardController="Contract" showHeader="false" extensions="Ctrl14_FormulaireFinanciabilite">
+    
+    <script type="text/javascript">
+        function onChange(selectedCheckbox, otherCheckbox){
+            var firstCheck = document.getElementById(otherCheckbox).checked;
+            var secondCheck = document.getElementById(selectedCheckbox).checked;
+            document.getElementById(otherCheckbox).checked = !document.getElementById(selectedCheckbox).checked;
+        }
+    
+        function onChangeOption(id){
+            var value = document.getElementById(id).value;
+            console.log(value);
+            onChangeAPEX(value);
+        }
+    </script>
+    
+    <apex:slds />
+    <apex:pageMessages rendered="true"/>
+    <div style="text-align:center;width:40%;margin-left:30%;">
+        <img src="{!$Resource.LLD_CarLease_Logo}" styleClass="button" width="40%" height="40" />
+   	</div>
+    <apex:form styleClass="slds-card" style="margin-left:30%;width:40%;">
+        <apex:actionFunction name="onChangeAPEX" action="{!onChangeAPEX}" reRender="none">
+            <apex:param name="choice" value=""/>
+        </apex:actionFunction>
+        <div class="slds-border_bottom">
+            <div class="slds-card__header slds-grid">
+                <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                    <div class="slds-media__body">
+                        <h2 class="slds-card__header-title">Formulaire financiabilité</h2>
+                    </div>
+                </header>
+            </div>
+        </div>
+        <div class="slds-card__body slds-card__body_inner" >
+            <div class="slds-grid slds-wrap">
+                <div class="slds-var-p-bottom_x-small slds-size_1-of-2 slds-var-p-left_x-small">
+                    <apex:outputText value="Nom client" />
+                    <apex:outputText value="{!nomClient}" style="margin-left:23.5%;" />
+                </div>
+                <div class="slds-var-p-bottom_x-small slds-size_1-of-2 slds-var-p-left_x-small">
+                    <apex:outputText value="SIREN" />
+                    <apex:outputText value="{!siren}" style="margin-left:36%;" />
+                    
+                </div>
+                <div class="slds-var-p-bottom_x-small slds-size_1-of-2 slds-var-p-left_x-small">
+                    <apex:outputText value="Numéro du contrat" />
+                    <apex:outputText value="{!contractNumber}" style="margin-left:10%;" />
+                </div>
+                <div class="slds-var-p-bottom_x-small slds-size_1-of-2 slds-var-p-left_x-small">
+                    <apex:outputText value="Date de fin du contrat" />
+                    <apex:outputText value="{!dateFinContrat}" style="margin-left:10%;" />
+                </div>
+                
+                <div class="slds-var-p-bottom_x-small slds-size_1-of-1 slds-var-p-left_x-small">
+                    <br />
+                </div>
+                
+                <div class="slds-var-p-bottom_x-small slds-size_1-of-2 slds-var-p-left_x-small">
+                    <apex:outputText value="Nom/Prénom du répondant" />
+                    <apex:inputText value="{!repondant}" required="true" style="margin-left:2%;" />
+                </div>
+                <div class="slds-var-p-bottom_x-small slds-size_1-of-2 slds-var-p-left_x-small">
+                    <apex:outputText value="En qualitté de" />
+                    <apex:inputText value="{!qualitede}" required="true" style="margin-left:2%;" />
+                </div>
+                
+                <div class="slds-var-p-bottom_x-small slds-size_1-of-1 slds-var-p-left_x-small">
+                    <br />
+                </div>
+                
+                <div class="slds-var-p-bottom_x-small slds-size_1-of-2 slds-var-p-left_x-small">
+                    <apex:outputText value="Réponse de la banque" />
+                     <select name="reponseBanque" id="reponseBanque" onchange="onChangeOption(this.id)" style="margin-left:2%;">
+                         <option value="Inconnue">Inconnue</option>
+                         <option value="Finançable">Finançable</option>
+                         <option value="Non Finançable">Non Finançable</option>
+                         <option value="N'est plus client">N'est plus client</option>
+                    </select>
+                </div>
+                   
+                <div style="margin-left:45%;">
+                    <apex:commandButton styleClass="slds-button slds-button--brand" value="Envoyer" action="{!sendForm}" rendered="{!!alreadyRecord}"/>  
+                </div>
+        	</div>
+        </div>
+    </apex:form>
+       
+    
+</apex:page>

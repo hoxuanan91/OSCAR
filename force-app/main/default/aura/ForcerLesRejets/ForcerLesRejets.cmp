@@ -1,0 +1,100 @@
+<aura:component description="Forcer Les Rejets"
+                implements="force:lightningQuickActionWithoutHeader,force:hasRecordId,force:hasSObjectName"
+                controller="LTNG02_ForcerLesRejets">
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <!-- Attributes -->
+    <aura:attribute name="recordForm" type="Object" />
+    <aura:attribute name="data" type="Object" />
+    <aura:attribute name="columns" type="List" />
+    <aura:attribute name="options" type="List" />
+    <aura:attribute name="resultForm" type="Map" default="{natureEnvoiForce: null}" />
+    <!-- Event -->
+    <!-- Library -->
+    <c:FunctionUtils aura:id="FunctionUtils"/>
+    <!-- Notification -->
+    <lightning:notificationsLibrary aura:id="notifLib"/>
+    <!-- Spinner -->
+    <aura:attribute name="showSpinner" type="Boolean" default="false"/>
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner variant="brand" size="large" class="slds-is-fixed" style="z-index:99999;"/>
+    </aura:if>
+
+
+    <header class="slds-modal__header">
+        <h2 class="slds-text-heading--medium">
+            Forcer Les Rejets
+        </h2>
+    </header>
+    <div>
+        <aura:if isTrue="{!v.data != null}">
+            <div id="rt-lineHeight" class="slds-size--1-of-1 slds-p-around--small">
+    
+                <h3 class="slds-section__title slds-theme_shade">
+                    <span class="slds-truncate slds-p-horizontal_small slds-p-bottom_small" title="Information du dossier"
+                        style="font-weight:bold;">Rejets en cours</span>
+                </h3>
+                
+                <div aria-hidden="false" class="slds-section__content">
+                </div>
+                <lightning:datatable
+                    keyField="id"
+                    data="{! v.data }"
+                    columns="{! v.columns }"
+                    hideCheckboxColumn="true"/>
+                
+                <div class="slds-col slds-p-horizontal_small slds-p-top_medium slds-size_1-of-1 slds-form slds-form_stacked">
+                    <lightning:textarea 
+                                        aura:id="motifForcage"
+                                        name="motifForcageControlesMetiers"
+                                        label="Motif forçage Contrôles Métiers"
+                                        value="{!v.resultForm.motifForcage}"
+                                        messageWhenValueMissing="Veuillez préciser un motif de forçage"
+                                        required="true"/>
+                </div>
+                <div class="slds-col slds-p-horizontal_small slds-size_1-of-1 slds-form slds-form_stacked">
+                    <lightning:radioGroup
+                              aura:id="natureEnvoiForce"
+                              name="radioButtonGroup"
+                              label="Nature de l'envoi forcé"
+                              options="{! v.options }"
+                              value="{! v.resultForm.natureEnvoiForce}"
+                              type="button"
+                              messageWhenValueMissing="Sélectionnez la nature d'envoi à Forcer."
+                              required="true"/>
+                </div>
+    
+            </div>
+            <footer class="slds-modal__footer" style="padding: 0.50rem 1rem;">
+                <lightning:button label="Annuler" onclick="{!c.closeModal}"/>
+                <lightning:button label="Sauvegarder" onclick="{!c.save}" variant="brand"/>
+            </footer>
+            <aura:set attribute="else">
+                <div class="slds-m-top_medium slds-m-bottom_medium">
+                    <section aria-describedby="dialog-body-id-76" aria-labelledby="dialog-heading-id-2" class="slds-popover slds-popover_warning slds-nubbin_bottom-left" role="dialog">
+                        <header class="slds-popover__header">
+                            <div class="slds-media slds-media_center slds-has-flexi-truncate ">
+                                <div class="slds-media__figure">
+                                    <span class="slds-icon_container slds-icon-utility-warning">
+                                            <lightning:icon iconName="utility:warning" alternativeText="Warning" />
+                                    </span>
+                                </div>
+                                <div class="slds-media__body">
+                                <h2 class="slds-truncate slds-text-heading_medium" id="dialog-heading-id-2" title="Review warning">Attention</h2>
+                                </div>
+                            </div>
+                        </header>
+                        <div class="slds-popover__body slds-popover_warning__body" id="dialog-body-id-76">
+                            <p style="font-weight: bold;">{!v.recordForm.errorMessage}</p>
+                        </div>
+                    </section>
+                </div>
+                <footer class="slds-modal__footer" style="padding: 0.50rem 1rem;">
+                    <lightning:button label="Fermer" onclick="{!c.closeModal}"/>
+                </footer>
+            </aura:set>
+        </aura:if>
+    </div>
+
+</aura:component>

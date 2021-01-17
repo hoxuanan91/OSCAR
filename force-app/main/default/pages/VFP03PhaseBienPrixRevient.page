@@ -1,0 +1,150 @@
+<apex:page standardController="PhaseDeBien__c" extensions="Ctrl03_PhaseBienPrixRevient" tabStyle="PhaseDeBien__c" docType="html-5.0">
+    <apex:stylesheet value="{!$Resource.CSSVFP03PhaseBienNatureSurface}" />
+
+             <apex:form >      
+                    <apex:pageBlock mode="edit">
+                        <apex:pageBlockButtons >
+                            <apex:commandButton action="{!Save}" value="Enregistrer"/>
+                        </apex:pageBlockButtons>
+
+                        <table class="Ventilation_Table">
+                            <thead>
+                                <tr>
+                                    <th style="width:28%"></th>
+                                    <th style="width:24%" class="border_left_bold natixis_background_color" colspan = "2">{!phaseDeBien.Colonne1__c}</th>
+                                    <th style="width:24%" class="border_left_bold natixis_background_color" colspan = "2">{!phaseDeBien.Colonne2__c}</th>
+                                    <th style="width:24%" class="border_left_bold natixis_background_color" colspan = "2">Total</th>                          
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="border_right_bold_inner" style="background-color:#DDD">AP (pour rappel)</td>
+                                    <td class="border_left_bold" colspan = "2"><apex:inputField styleClass="natixis_inputfield" value="{!phaseDeBien.AvancePreneurCol1__c}" /> €</td>
+                                    <td class="border_left_bold" colspan = "2"><apex:inputField styleClass="natixis_inputfield" value="{!phaseDeBien.AvancePreneurCol2__c}" /> €</td>
+                                    <td class="border_left_bold" colspan = "2"><apex:outputfield styleClass="natixis_outputfield" value="{!phaseDeBien.AvancePreneurTotal__c}" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="border_right_bold_inner" style="background-color:#DDD">Subvention (pour rappel)</td>
+                                    <td class="border_left_bold" colspan = "2"><apex:inputField styleClass="natixis_inputfield" value="{!phaseDeBien.SubventionCol1__c}" /> €</td>
+                                    <td class="border_left_bold" colspan = "2"><apex:inputField styleClass="natixis_inputfield" value="{!phaseDeBien.SubventionCol2__c}" /> €</td>
+                                    <td class="border_left_bold" colspan = "2"><apex:outputfield styleClass="natixis_outputfield" value="{!phaseDeBien.SubventionTotal__c}" /></td>
+                                </tr>
+                                <tr style="height:20px;background-color:white;">
+                                    <td colspan = "1"></td>
+                                    <td colspan = "2"></td>
+                                    <td colspan = "2"></td>
+                                    <td colspan = "2"></td>
+                                </tr>
+                                <tr>
+                                    <td class="border_right_bold_inner" style="background-color:#DDD">Prix du foncier</td>
+                                    <td class="border_left_bold" colspan = "2"><apex:inputField styleClass="natixis_inputfield" value="{!phaseDeBien.MontantTerrainExistants__c}" /> €</td>
+                                    <td class="border_left_bold" colspan = "2"><apex:inputField styleClass="natixis_inputfield" value="{!phaseDeBien.MontantTerrainConsAvt__c}" /> €</td>
+                                    <td class="border_left_bold" colspan = "2"><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalPrixFoncier__c}" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="border_right_bold_inner" style="background-color:#DDD">Autre</td>
+                                    <td class="border_left_bold" colspan = "2"><apex:inputField styleClass="natixis_inputfield" value="{!phaseDeBien.MontantAutresExistants__c}" /> €</td>
+                                    <td class="border_left_bold" colspan = "2"><apex:inputField styleClass="natixis_inputfield" value="{!phaseDeBien.MontantAutresConsAvt__c}" /> €</td>
+                                    <td class="border_left_bold" colspan = "2"><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalMontantAutre__c}" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="border_right_bold_inner" style="background-color:#DDD">Total coût foncier</td>
+                                    <td class="border_left_bold" colspan = "2"><apex:outputField styleClass="natixis_outputField" value="{!phaseDeBien.TotalCoutFoncierExistants__c}" /></td>
+                                    <td class="border_left_bold" colspan = "2"><apex:outputField styleClass="natixis_outputField" value="{!phaseDeBien.TotalCoutFoncierConsAvt__c}" /></td>
+                                    <td class="border_left_bold" colspan = "2"><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalCoutFoncier__c}" /></td>
+                                </tr>
+                                <tr style="height:20px;background-color:white;">
+                                    <td colspan = "1"></td>
+                                    <td colspan = "2"></td>
+                                    <td colspan = "2"></td>
+                                    <td colspan = "2"></td>
+                                </tr>
+                                <tr>
+                                    <td class="border_right_bold_inner" style="background-color:#DDD">Prix d'acquisition</td>
+                                    <td class="border_left_bold" colspan = "2"><apex:inputField styleClass="natixis_inputfield" value="{!phaseDeBien.MontantAcquisitionExistants__c}" /> €</td>
+                                    <td class="border_left_bold" colspan = "2"><apex:inputField styleClass="natixis_inputfield" value="{!phaseDeBien.MontantAcquisitionConsAvt__c}" /> €</td>
+                                    <td class="border_left_bold" colspan = "2"><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalMontantAcquisition__c}" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="border_right_bold_inner" style="background-color:#DDD">Frais d'acquisition</td>
+                                    <td class="border_left_bold" colspan = "2"><apex:inputField styleClass="natixis_inputfield" value="{!phaseDeBien.FraisAcquisitionExistants__c}" /> €</td>
+                                    <td class="border_left_bold" colspan = "2"><apex:inputField styleClass="natixis_inputfield" value="{!phaseDeBien.FraisAcquisitionConsAvt__c}" /> €</td>
+                                    <td class="border_left_bold" colspan = "2"><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalFraisAcquisition__c}" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="border_right_bold_inner" style="background-color:#DDD">Total coût d'acquisition</td>
+                                    <td class="border_left_bold" colspan = "2"><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalCoutAcquisitionExistants__c}" /></td>
+                                    <td class="border_left_bold" colspan = "2"><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalCoutAcquisitionConsAvt__c}" /></td>
+                                    <td class="border_left_bold" colspan = "2"><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalCoutAcquisition__c}" /></td>
+                                </tr>
+                                <tr style="height:20px;background-color:white;">
+                                    <td colspan = "1"></td>
+                                    <td colspan = "2"></td>
+                                    <td colspan = "2"></td>
+                                    <td colspan = "2"></td>
+                                </tr>
+                                <tr>
+                                    <td class="border_right_bold_inner" style="background-color:#DDD">Frais de Démolition</td>
+                                    <td class="border_left_bold" colspan = "2"><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.FraisDemolitionCol1__c}" /></td>
+                                    <td class="border_left_bold" colspan = "2"><apex:inputField styleClass="natixis_inputfield" value="{!phaseDeBien.FraisDemolition__c}" /> €</td>
+                                    <td class="border_left_bold" colspan = "2"><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalFraisDemolition__c}" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="border_right_bold_inner" style="background-color:#DDD">VRD</td>
+                                    <td class="border_left_bold" colspan = "2"><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.VRDCol1__c}" /></td>
+                                    <td class="border_left_bold" colspan = "2"><apex:inputField styleClass="natixis_inputfield" value="{!phaseDeBien.CoutVRDConsAvt__c}" /> €</td>
+                                    <td class="border_left_bold" colspan = "2"><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalVRD__c}" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="border_right_bold_inner" style="background-color:#DDD">Travaux</td>
+                                    <td class="border_left_bold" colspan = "2"><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TravauxCol1__c}" /></td>
+                                    <td class="border_left_bold" colspan = "2"><apex:inputField styleClass="natixis_inputfield" value="{!phaseDeBien.CoutTravauxConsAvt__c}" /> €</td>
+                                    <td class="border_left_bold" colspan = "2"><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalTravaux__c}" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="border_right_bold_inner" style="background-color:#DDD">Honoraires</td>
+                                    <td class="border_left_bold" colspan = "2"><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.HonorairesCol1__c}" /></td>
+                                    <td class="border_left_bold" colspan = "2"><apex:inputField styleClass="natixis_inputfield" value="{!phaseDeBien.CoutHonorairesConsAvt__c}" /> €</td>
+                                    <td class="border_left_bold" colspan = "2"><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalHonoraires__c}" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="border_right_bold_inner" style="background-color:#DDD">Assurances</td>
+                                    <td class="border_left_bold" colspan = "2"><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.AssurancesCol1__c}" /></td>
+                                    <td class="border_left_bold" colspan = "2"><apex:inputField styleClass="natixis_inputfield" value="{!phaseDeBien.CoutAssurancesConsAvt__c}" /> €</td>
+                                    <td class="border_left_bold" colspan = "2"><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalAssurances__c}" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="border_right_bold_inner" style="background-color:#DDD">Divers et Imprévus</td>
+                                    <td class="border_left_bold" colspan = "2"><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.DiversImprevusCol1__c}" /></td>
+                                    <td class="border_left_bold" colspan = "2"><apex:inputField styleClass="natixis_inputfield" value="{!phaseDeBien.CoutDiversImprevusConsAvt__c}" /> €</td>
+                                    <td class="border_left_bold" colspan = "2"><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalDiversImprevus__c}" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="border_right_bold_inner"><apex:inputField style="background-color:#DDD; text-align:center;" styleClass="natixis_input_first_column" type="text" value="{!phaseDeBien.NomCoutLibre__c}"/></td>
+                                    <td class="border_left_bold" colspan = "2"><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.CoutLibre1__c}" /></td>
+                                    <td class="border_left_bold" colspan = "2"><apex:inputField styleClass="natixis_inputfield" value="{!phaseDeBien.CoutLibreConsAvt__c}" /> €</td>
+                                    <td class="border_left_bold" colspan = "2"><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalCoutLibre__c}" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="border_right_bold_inner" style="background-color:#DDD">Autres</td>
+                                    <td class="border_left_bold" colspan = "2"><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.AutresCol1__c}" /></td>
+                                    <td class="border_left_bold" colspan = "2"><apex:inputField styleClass="natixis_inputfield" value="{!phaseDeBien.CoutAutresConsAvt__c}" /> €</td>
+                                    <td class="border_left_bold" colspan = "2"><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalAutres__c}" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="border_right_bold_inner" style="background-color:#DDD">Total coût de construction</td>
+                                    <td class="border_left_bold" colspan = "2"><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalCoutConstructionCol1__c}" /></td>
+                                    <td class="border_left_bold" colspan = "2"><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalCoutConstructionConsAvt__c}" /></td>
+                                    <td class="border_left_bold" colspan = "2"><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalCoutConstruction__c}" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="border_right_bold_inner" style="background-color:#DDD">TOTAL</td>
+                                    <td class="border_left_bold" colspan = "2"><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalExistants__c}" /></td>
+                                    <td class="border_left_bold" colspan = "2"><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.TotalConsAvt__c}" /></td>
+                                    <td class="border_left_bold" colspan = "2"><apex:outputField styleClass="natixis_outputfield" value="{!phaseDeBien.Total__c}" /></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                 </apex:pageBlock>
+        </apex:form>
+</apex:page>

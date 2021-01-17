@@ -1,0 +1,4 @@
+<aura:event type="COMPONENT" description="EVT_CreateCase">
+    <aura:attribute name="recordForm" type="Map"/>
+    <aura:attribute name="recordTypeDeveloperName" type="String"/>
+</aura:event>

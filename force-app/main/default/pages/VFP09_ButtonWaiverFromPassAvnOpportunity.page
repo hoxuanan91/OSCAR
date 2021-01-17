@@ -1,0 +1,13 @@
+<apex:page docType="html-5.0" standardController="Opportunity" extensions="Ctrl09_ButtonWaiverFromPassAvn" tabStyle="opportunity"  sidebar="true" showHeader="true" cache="true" action="{!canCreateWaiver}">
+    
+    	<apex:form id="vfp09ButtonWaiverFromPassAvn">
+            <apex:pageBlock >
+    			<apex:pageBlockSection >
+                	<apex:pageMessages ></apex:pageMessages>
+             		<center><apex:commandLink value="Cliquez ici pour revenir sur la page précédente" action="{!Fermer}"  styleClass="btn" style="text-decoration:none"></apex:commandLink></center>
+        		</apex:pageBlockSection>
+            </apex:pageBlock>
+    	</apex:form>
+    
+    
+</apex:page>

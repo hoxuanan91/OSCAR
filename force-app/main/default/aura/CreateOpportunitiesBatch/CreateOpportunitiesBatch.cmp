@@ -1,0 +1,466 @@
+<aura:component
+	implements="flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickActionWithoutHeader"
+	access="global"
+	controller="OppBatch_Controller"
+>
+	<aura:attribute name="recordId" type="Id" access="public" />
+	<aura:attribute name="childAccounts" type="List" access="public" />
+	<aura:attribute name="selectedValue" type="String" access="public" />
+	<aura:attribute name="recordTypes" type="List" />
+	<aura:attribute name="columns" type="List" />
+	<aura:attribute name="data" type="List" />
+	<aura:attribute name="accountName" type="String" access="public" />
+	<aura:attribute name="oppName" type="String" access="public" />
+	<aura:attribute name="comNumber" type="String" access="public" />
+	<aura:attribute name="vehNumber" type="String" access="public" />
+	<aura:attribute name="numCommandes" type="String" access="public" />
+	<aura:attribute name="numAve" type="String" access="public" />
+	<aura:attribute name="comType" type="String" access="public" />
+	<aura:attribute name="aveType" type="String" access="public" />
+	<aura:attribute name="recType" type="String" access="public" />
+	<aura:attribute name="avenantTypes" type="List" />
+	<aura:attribute name="commandesTypes" type="List" />
+	<aura:attribute name="HideSpinner" type="Boolean" default="false" />
+	<aura:attribute name="conPCD" type="List" />
+	<aura:attribute name="conPCR" type="List" />
+	<aura:attribute name="conPP" type="List" />
+	<aura:attribute name="conPC" type="List" />
+	<aura:attribute name="conPFC" type="List" />
+	<aura:attribute name="statMarge" type="List" />
+	<aura:attribute name="nombreFleet" type="String" />
+	<aura:attribute name="typologieFleet" type="List" />
+	<aura:attribute
+		name="canSave"
+		type="Boolean"
+		default="false"
+		access="public"
+	/>
+
+	<aura:handler name="init" value="{!this}" action="{! c.doInit}" />
+
+	<aura:html tag="style">
+		.slds-modal__container { min-width: 90vw; min-heigth: 90vw; }
+		.slds-modal__content { overflow-y: scroll !important; }
+	</aura:html>
+
+	<aura:renderIf isTrue="{!v.HideSpinner}">
+		<div class="slds-spinner_container">
+			<div class="slds-spinner slds-spinner--large" role="alert">
+				<span class="slds-assistive-text">Loading, Please Wait...</span>
+				<div class="slds-spinner__dot-a"></div>
+				<div class="slds-spinner__dot-b"></div>
+			</div>
+		</div>
+	</aura:renderIf>
+
+	<div>
+		<section
+			role="dialog"
+			tabindex="-1"
+			class="slds-modal slds-fade-in-open slds-modal_large"
+			aria-labelledby="modal-heading-01"
+			aria-modal="true"
+			aria-describedby="modal-content-id-1"
+		>
+			<div class="slds-modal__container">
+				<header class="slds-modal__header">
+					<h2
+						id="modal-heading-01"
+						class="slds-text-heading_medium slds-hyphenate"
+						>Multiple Commandes/avenants</h2
+					>
+				</header>
+				<div
+					class="slds-modal__content slds-p-around_medium slds-scrollable"
+					id="modal-content-id-1"
+				>
+					<lightning:layout>
+						<lightning:layoutItem
+							padding="around-large"
+							flexibility="auto"
+						>
+							<lightning:combobox
+								name="general"
+								label="Type de projet associé"
+								options="{! v.recordTypes }"
+								onchange="{! c.handleRecordTypeChange }"
+								required="true"
+							/>
+						</lightning:layoutItem>
+					</lightning:layout>
+
+					<aura:if isTrue="{!v.recType == null}">
+						<br></br><br></br><br></br><br></br><br></br>
+					</aura:if>
+
+					<aura:if isTrue="{!v.recType != null}">
+						<h3 class="slds-section-title--divider"
+							>Informations sur le Projet Associé
+						</h3>
+						<div
+							class="slds-form--stacked slds-p-around--x-small slds-m-bottom_none"
+						>
+							<lightning:layout>
+								<lightning:layoutItem
+									flexibility="auto"
+									padding="around-small"
+								>
+									<lightning:select
+										aura:id="selectAccount"
+										name="selectAcc"
+										label="Nom du Tiers"
+										required="true"
+										value="{!v.selectedValue}"
+										onchange="{!c.changeAccount}"
+									>
+										<option value=""
+											>Sélectionner une option</option
+										>
+										<aura:iteration
+											items="{!v.childAccounts}"
+											var="item"
+										>
+											<option
+												value="{! item.Id}"
+												selected="{item.selected}"
+												>{!item.Name}</option
+											>
+										</aura:iteration>
+									</lightning:select>
+								</lightning:layoutItem>
+
+								<lightning:layoutItem
+									padding="around-small"
+									flexibility="auto"
+								>
+									<lightning:input
+										aura:id="opp"
+										name="oppName"
+										label="Nom du Projet Associé"
+										required="true"
+									/>
+								</lightning:layoutItem>
+
+								<aura:if isTrue="{!v.recType != 'fleet'}">
+									<lightning:layoutItem
+										flexibility="auto"
+										padding="around-small"
+									>
+										<lightning:input
+											aura:id="veh"
+											name="vehNumber"
+											label="Nombre de véhicule(s) concerné(s)"
+										/>
+									</lightning:layoutItem>
+								</aura:if>
+							</lightning:layout>
+						</div>
+					</aura:if>
+
+					<aura:if isTrue="{!v.recType == 'avenant'}">
+						<div
+							class="slds-form--stacked slds-p-around--x-small slds-m-bottom--x-small"
+						>
+							<lightning:layout>
+								<lightning:layoutItem
+									flexibility="auto"
+									padding="around-small"
+								>
+									<lightning:input
+										aura:id="ave"
+										name="aveNumber"
+										label="Numéro d’avenant Sequana"
+									/>
+								</lightning:layoutItem>
+								<lightning:layoutItem
+									flexibility="auto"
+									padding="around-small"
+								>
+									<lightning:combobox
+										aura:id="avenantType"
+										name="general"
+										label="Type d’avenant"
+										options="{! v.avenantTypes }"
+									/>
+								</lightning:layoutItem>
+							</lightning:layout>
+							<lightning:layout>
+								<lightning:layoutItem
+									flexibility="auto"
+									padding="around-small"
+								>
+									<lightning:input
+										aura:id="avenant"
+										name="numAve"
+										label="Numéros d’avenants"
+									/>
+								</lightning:layoutItem>
+								<lightning:layoutItem
+									flexibility="auto"
+									padding="around-small"
+								>
+									<c:MultiSelect
+										aura:id="statMarge"
+										showFilterInput="false"
+										showRefreshButton="false"
+										showClearButton="false"
+										mslabel="Statut retour à la marge"
+										msoptions="{!v.statMarge}"
+									/>
+								</lightning:layoutItem>
+							</lightning:layout>
+						</div>
+					</aura:if>
+
+					<aura:if isTrue="{!v.recType == 'commande'}">
+						<div
+							class="slds-form--stacked slds-p-around--x-small slds-m-bottom--x-small"
+						>
+							<lightning:layout>
+								<lightning:layoutItem
+									flexibility="auto"
+									padding="around-small"
+								>
+									<lightning:input
+										aura:id="com"
+										name="comNumber"
+										label="Numéro de commande Sequana"
+									/>
+								</lightning:layoutItem>
+								<lightning:layoutItem
+									flexibility="auto"
+									padding="around-small"
+								>
+									<lightning:combobox
+										aura:id="commandesType"
+										name="general"
+										label="Typologie de commande"
+										options="{! v.commandesTypes }"
+									/>
+								</lightning:layoutItem>
+							</lightning:layout>
+							<lightning:layout>
+								<lightning:layoutItem
+									flexibility="auto"
+									padding="around-small"
+								>
+									<lightning:textarea
+										aura:id="commandes"
+										name="numComm"
+										label="Numéros de commandes si multi véhicules"
+									/>
+								</lightning:layoutItem>
+							</lightning:layout>
+						</div>
+					</aura:if>
+
+					<aura:if isTrue="{!v.recType == 'fleet'}">
+						<div
+							class="slds-form--stacked slds-p-around--x-small slds-m-bottom--x-small"
+						>
+							<lightning:layout>
+								<lightning:layoutItem
+									flexibility="auto"
+									padding="around-small"
+								>
+									<lightning:input
+										aura:id="com"
+										name="comNumber"
+										label="Numéro de commande Sequana"
+									/>
+								</lightning:layoutItem>
+								<lightning:layoutItem
+									flexibility="auto"
+									padding="around-small"
+								>
+									<lightning:input
+										aura:id="commandes"
+										name="numComm"
+										label="Numéros de commandes si multi véhicules"
+									/>
+								</lightning:layoutItem>
+							</lightning:layout>
+
+							<lightning:layout>
+								<lightning:layoutItem
+									flexibility="auto"
+									padding="around-small"
+								>
+									<lightning:input
+										aura:id="nombreFleet"
+										name="comNumber"
+										label="Nombre de Fleet"
+									/>
+								</lightning:layoutItem>
+								<lightning:layoutItem
+									flexibility="auto"
+									padding="around-small"
+								>
+									<lightning:combobox
+										aura:id="typologieFleet"
+										name="general"
+										label="Typologie de Fleet"
+										options="{! v.typologieFleet }"
+									/>
+								</lightning:layoutItem>
+							</lightning:layout>
+						</div>
+					</aura:if>
+
+					<aura:if isTrue="{!v.recType == 'commande'}">
+						<h3 class="slds-section-title--divider"
+							>Fiche de transmission MO</h3
+						>
+						<div
+							class="slds-form--stacked slds-p-around--x-small slds-m-bottom--x-small"
+						>
+							<lightning:layout>
+								<lightning:layoutItem
+									flexibility="auto"
+									padding="around-small"
+								>
+									<c:MultiSelect
+										aura:id="conPCD"
+										showFilterInput="false"
+										showRefreshButton="false"
+										showClearButton="false"
+										mslabel="Contrôle des pièces client direct (COM)"
+										msoptions="{!v.conPCD}"
+									/>
+								</lightning:layoutItem>
+								<lightning:layoutItem
+									flexibility="auto"
+									padding="around-small"
+								>
+									<c:MultiSelect
+										aura:id="conPCR"
+										showFilterInput="false"
+										showRefreshButton="false"
+										showClearButton="false"
+										mslabel="Contrôle des pièces client réseau (COM)"
+										msoptions="{!v.conPCR}"
+									/>
+								</lightning:layoutItem>
+								<lightning:layoutItem
+									flexibility="auto"
+									padding="around-small"
+								>
+									<c:MultiSelect
+										aura:id="conPP"
+										showFilterInput="false"
+										showRefreshButton="false"
+										showClearButton="false"
+										mslabel="Contrôle des pièces prestations (COM)"
+										msoptions="{!v.conPP}"
+									/>
+								</lightning:layoutItem>
+								<lightning:layoutItem
+									flexibility="auto"
+									padding="around-small"
+								>
+									<c:MultiSelect
+										aura:id="conPC"
+										showFilterInput="false"
+										showRefreshButton="false"
+										showClearButton="false"
+										mslabel="Contrôle des pièces commande (COM)"
+										msoptions="{!v.conPC}"
+									/>
+								</lightning:layoutItem>
+							</lightning:layout>
+						</div>
+					</aura:if>
+
+					<aura:if isTrue="{!v.recType == 'fleet'}">
+						<h3 class="slds-section-title--divider"
+							>Fiche de transmission MO</h3
+						>
+						<div
+							class="slds-form--stacked slds-p-around--x-small slds-m-bottom--x-small"
+						>
+							<lightning:layout>
+								<lightning:layoutItem
+									flexibility="auto"
+									padding="around-small"
+								>
+									<c:MultiSelect
+										aura:id="conPFC"
+										showFilterInput="false"
+										showRefreshButton="false"
+										showClearButton="false"
+										mslabel="Contrôle des pièces Fleet (COM)"
+										msoptions="{!v.conPFC}"
+									/>
+								</lightning:layoutItem>
+								<lightning:layoutItem
+									flexibility="auto"
+									padding="around-small"
+								>
+									<c:MultiSelect
+										aura:id="conPP"
+										showFilterInput="false"
+										showRefreshButton="false"
+										showClearButton="false"
+										mslabel="Contrôle des pièces prestations (COM)"
+										msoptions="{!v.conPP}"
+									/>
+								</lightning:layoutItem>
+							</lightning:layout>
+						</div>
+					</aura:if>
+
+					<aura:if isTrue="{!v.recType != null}">
+						<h3 class="slds-section-title--divider"
+							>Projets Associés créés</h3
+						>
+						<div
+							class="slds-form--stacked slds-p-around--x-small slds-m-bottom--x-small"
+						>
+							<div style="text-align:center">
+								<lightning:button
+									variant="brand"
+									label="Ajouter/Nouveau"
+									onclick="{! c.handleComponent }"
+								/>
+							</div>
+							{!v.body}
+							<lightning:layout>
+								<lightning:layoutItem padding="around-small">
+									<div style="height: 300px">
+										<lightning:datatable
+											columns="{! v.columns }"
+											data="{! v.data }"
+											keyField="id"
+											hideCheckboxColumn="true"
+											resizeColumnDisabled="false"
+											minColumnWidth="{! v.minColumnWidth }"
+											maxColumnWidth="{! v.maxColumnWidth }"
+											resizeStep="20"
+											showRowNumberColumn="true"
+											onrowaction="{! c.removeElement }"
+										/>
+									</div>
+								</lightning:layoutItem>
+							</lightning:layout>
+						</div>
+					</aura:if>
+				</div>
+
+				<footer class="slds-modal__footer">
+					<button
+						class="slds-button slds-button_neutral"
+						onclick="{!c.closeWindow}"
+						>Annuler</button
+					>
+					<button
+						class="slds-button slds-button_brand"
+						onclick="{!c.saveOpportunities}"
+						disabled="{! !v.canSave}"
+						>Enregistrer</button
+					>
+				</footer>
+			</div>
+		</section>
+		<div class="slds-backdrop slds-backdrop_open"></div>
+	</div>
+</aura:component>

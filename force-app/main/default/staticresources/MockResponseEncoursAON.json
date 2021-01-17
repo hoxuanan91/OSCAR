@@ -1,0 +1,13 @@
+{
+  "excludeLeaseDealId": "NUMERO",
+  "tiersIdList": [
+    {
+      "tiersId": "1892127",
+      "uniteGestionCode": "UG001"
+    },
+    {
+      "tiersId": "1164416",
+      "uniteGestionCode": "UG001"
+    }
+  ]
+}
